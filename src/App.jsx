@@ -88,6 +88,7 @@ function App() {
   const [teacher, setTeacher] = useState('Prof : Marwane.R');
   const [exercises, setExercises] = useState(() => createExercises(3));
   const [secondPageExercises, setSecondPageExercises] = useState(() => createExercises(3));
+  const [isSecondPageEnabled, setIsSecondPageEnabled] = useState(true);
   const [isTotalLocked, setIsTotalLocked] = useState(true);
   const [exerciseHeights, setExerciseHeights] = useState(() => [430, 278, 278]);
   const [secondPageHeights, setSecondPageHeights] = useState(() => createHeights(3, TOTAL_SECOND_PAGE_HEIGHT));
@@ -415,7 +416,7 @@ function App() {
   };
 
   const createPdf = async () => {
-    const pages = pageRefs.current.filter(Boolean);
+    const pages = pageRefs.current.filter((page, index) => Boolean(page) && (index === 0 || isSecondPageEnabled));
     if (pages.length === 0) return null;
 
     setIsExporting(true);
@@ -592,6 +593,11 @@ function App() {
     </div>
   );
 
+  const visibleFileInputs = [
+    ...exercises.map((exercise) => ({ exercise, page: 1 })),
+    ...(isSecondPageEnabled ? secondPageExercises.map((exercise) => ({ exercise, page: 2 })) : []),
+  ];
+
   return (
     <main
       className={`app-shell ${resizeState ? 'is-resizing' : ''}`}
@@ -625,6 +631,15 @@ function App() {
           </div>
         </div>
 
+        <label className="total-lock-control">
+          <input
+            type="checkbox"
+            checked={isSecondPageEnabled}
+            onChange={(e) => setIsSecondPageEnabled(e.target.checked)}
+          />
+          Afficher la page 2
+        </label>
+
         {!isHomework && (
           <>
             <label className="total-lock-control">
@@ -652,20 +667,22 @@ function App() {
           </div>
         </div>
 
-        <div className="form-group">
-          <label>Nombre d’exercices page 2</label>
-          <div className="duration-control compact-control">
-            <button type="button" onClick={() => changeExerciseCount(2, -1)} disabled={secondPageExercises.length === MIN_EXERCISES}>
-              −
-            </button>
-            <strong>{secondPageExercises.length}</strong>
-            <button type="button" onClick={() => changeExerciseCount(2, 1)} disabled={secondPageExercises.length === MAX_EXERCISES}>
-              +
-            </button>
+        {isSecondPageEnabled && (
+          <div className="form-group">
+            <label>Nombre d’exercices page 2</label>
+            <div className="duration-control compact-control">
+              <button type="button" onClick={() => changeExerciseCount(2, -1)} disabled={secondPageExercises.length === MIN_EXERCISES}>
+                −
+              </button>
+              <strong>{secondPageExercises.length}</strong>
+              <button type="button" onClick={() => changeExerciseCount(2, 1)} disabled={secondPageExercises.length === MAX_EXERCISES}>
+                +
+              </button>
+            </div>
           </div>
-        </div>
+        )}
 
-        {[...exercises.map((exercise) => ({ exercise, page: 1 })), ...secondPageExercises.map((exercise) => ({ exercise, page: 2 }))].map(({ exercise, page }) => (
+        {visibleFileInputs.map(({ exercise, page }) => (
           <input
             key={exercise.id}
             ref={(input) => {
@@ -729,9 +746,11 @@ function App() {
           {renderExerciseList(1, exercises, exerciseHeights, 1)}
         </div>
 
-        <div className={`a4-page exam-page second-page ${isExporting ? 'is-exporting' : ''}`} ref={(element) => { pageRefs.current[1] = element; }}>
-          {renderExerciseList(2, secondPageExercises, secondPageHeights, exercises.length + 1)}
-        </div>
+        {isSecondPageEnabled && (
+          <div className={`a4-page exam-page second-page ${isExporting ? 'is-exporting' : ''}`} ref={(element) => { pageRefs.current[1] = element; }}>
+            {renderExerciseList(2, secondPageExercises, secondPageHeights, exercises.length + 1)}
+          </div>
+        )}
       </section>
     </main>
   );
