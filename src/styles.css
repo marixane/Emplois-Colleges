@@ -348,10 +348,7 @@ button:disabled {
 }
 
 .phone-rule {
-  margin: 2px 0 4px;
-  text-align: right;
-  font-size: 9px;
-  font-weight: bold;
+  display: none;
 }
 
 .exercise-list {
@@ -359,7 +356,7 @@ button:disabled {
   gap: 2px;
   height: 1006px;
   overflow: hidden;
-  padding-top: 12px;
+  padding-top: 4px;
 }
 
 .exam-exercise {
