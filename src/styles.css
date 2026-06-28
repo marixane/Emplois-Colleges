@@ -74,28 +74,36 @@ button:disabled {
   background: #555;
 }
 
-.duration-control {
+.duration-control,
+.points-control {
   display: grid;
   grid-template-columns: 48px 1fr 48px;
   gap: 8px;
   align-items: center;
 }
 
-.duration-control button {
+.duration-control button,
+.points-control button {
   height: 44px;
   margin-top: 0;
   font-size: 24px;
   line-height: 1;
 }
 
-.duration-control strong {
+.duration-control strong,
+.points-control strong {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 44px;
   border: 2px solid #ddd;
   border-radius: 6px;
-  font-size: 18px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.points-control strong {
+  font-size: 13px;
 }
 
 .two-cols {
