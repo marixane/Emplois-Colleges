@@ -15,6 +15,11 @@ body {
   padding: 24px;
 }
 
+.app-shell.is-resizing,
+.app-shell.is-resizing * {
+  cursor: ns-resize !important;
+}
+
 .panel {
   width: 380px;
   background: white;
@@ -261,6 +266,35 @@ button:disabled {
   overflow: visible;
 }
 
+.resize-handle {
+  position: absolute;
+  top: -8px;
+  left: 36px;
+  right: 36px;
+  width: auto;
+  height: 14px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 99px;
+  background: rgba(37, 99, 235, 0.18);
+  cursor: ns-resize;
+  z-index: 10;
+}
+
+.resize-handle::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 6px;
+  border-top: 3px dashed #2563eb;
+}
+
+.resize-handle:hover {
+  background: rgba(37, 99, 235, 0.32);
+}
+
 .exercise-title {
   position: absolute;
   top: -15px;
@@ -273,50 +307,6 @@ button:disabled {
   font-size: 16px;
   z-index: 5;
   box-shadow: 0 0 0 2px white;
-}
-
-.height-drag-line {
-  position: absolute;
-  left: 20px;
-  right: 20px;
-  bottom: -11px;
-  width: auto;
-  height: 18px;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  border-radius: 999px;
-  background: rgba(37, 99, 235, 0.16);
-  color: #111;
-  cursor: ns-resize;
-  z-index: 20;
-}
-
-.height-drag-line::before {
-  content: '';
-  position: absolute;
-  left: 8px;
-  right: 8px;
-  top: 8px;
-  border-top: 3px dashed #2563eb;
-}
-
-.height-drag-line span {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 26px;
-  height: 18px;
-  background: white;
-  border: 2px solid #2563eb;
-  border-radius: 999px;
-  font-size: 11px;
-  line-height: 1;
-}
-
-.height-drag-line:hover {
-  background: rgba(37, 99, 235, 0.28);
 }
 
 .exercise-body {
