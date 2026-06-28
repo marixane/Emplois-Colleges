@@ -58,6 +58,7 @@ const createExercise = (index, points = 5) => ({
   zoom: 100,
   x: 0,
   y: 0,
+  masks: [],
 });
 
 const createExercises = (count) => {
@@ -188,7 +189,7 @@ function App() {
         const nextPoints = isTotalLocked ? balanced[index] : existing?.points ?? 5;
 
         return existing
-          ? { ...existing, title: `Exercice ${index + 1}`, points: nextPoints }
+          ? { ...existing, title: `Exercice ${index + 1}`, points: nextPoints, masks: existing.masks ?? [] }
           : createExercise(index, nextPoints);
       });
     });
@@ -280,11 +281,94 @@ function App() {
     setResizeState(null);
 
     setDragState({
+      type: 'photo',
       id: exercise.id,
       startClientX: event.clientX,
       startClientY: event.clientY,
       startX: exercise.x,
       startY: exercise.y,
+    });
+  };
+
+  const addMask = (exerciseId) => {
+    setExercises((items) =>
+      items.map((item) => {
+        if (item.id !== exerciseId) return item;
+
+        const nextMask = {
+          id: `mask-${Date.now()}`,
+          x: 120,
+          y: 90,
+          width: 160,
+          height: 60,
+        };
+
+        return { ...item, masks: [...(item.masks ?? []), nextMask] };
+      })
+    );
+  };
+
+  const deleteMask = (exerciseId, maskId) => {
+    setExercises((items) =>
+      items.map((item) =>
+        item.id === exerciseId
+          ? { ...item, masks: (item.masks ?? []).filter((mask) => mask.id !== maskId) }
+          : item
+      )
+    );
+  };
+
+  const updateMask = (exerciseId, maskId, updates) => {
+    setExercises((items) =>
+      items.map((item) =>
+        item.id === exerciseId
+          ? {
+              ...item,
+              masks: (item.masks ?? []).map((mask) =>
+                mask.id === maskId
+                  ? {
+                      ...mask,
+                      ...updates,
+                      x: clamp(updates.x ?? mask.x, 0, 720),
+                      y: clamp(updates.y ?? mask.y, 0, 980),
+                      width: clamp(updates.width ?? mask.width, 24, 720),
+                      height: clamp(updates.height ?? mask.height, 18, 980),
+                    }
+                  : mask
+              ),
+            }
+          : item
+      )
+    );
+  };
+
+  const startMaskDrag = (event, exerciseId, mask) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setResizeState(null);
+    setDragState({
+      type: 'mask-move',
+      exerciseId,
+      maskId: mask.id,
+      startClientX: event.clientX,
+      startClientY: event.clientY,
+      startX: mask.x,
+      startY: mask.y,
+    });
+  };
+
+  const startMaskResize = (event, exerciseId, mask) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setResizeState(null);
+    setDragState({
+      type: 'mask-resize',
+      exerciseId,
+      maskId: mask.id,
+      startClientX: event.clientX,
+      startClientY: event.clientY,
+      startWidth: mask.width,
+      startHeight: mask.height,
     });
   };
 
@@ -294,7 +378,25 @@ function App() {
     const deltaX = event.clientX - dragState.startClientX;
     const deltaY = event.clientY - dragState.startClientY;
 
-    updateImagePosition(dragState.id, dragState.startX + deltaX, dragState.startY + deltaY);
+    if (dragState.type === 'photo') {
+      updateImagePosition(dragState.id, dragState.startX + deltaX, dragState.startY + deltaY);
+      return;
+    }
+
+    if (dragState.type === 'mask-move') {
+      updateMask(dragState.exerciseId, dragState.maskId, {
+        x: dragState.startX + deltaX,
+        y: dragState.startY + deltaY,
+      });
+      return;
+    }
+
+    if (dragState.type === 'mask-resize') {
+      updateMask(dragState.exerciseId, dragState.maskId, {
+        width: dragState.startWidth + deltaX,
+        height: dragState.startHeight + deltaY,
+      });
+    }
   };
 
   const endDrag = () => {
@@ -321,6 +423,7 @@ function App() {
               zoom: 100,
               x: 0,
               y: 0,
+              masks: [],
             }
           : item
       )
@@ -328,7 +431,11 @@ function App() {
   };
 
   const clearExerciseImage = (id) => {
-    updateExercise(id, 'image', null);
+    setExercises((items) =>
+      items.map((item) =>
+        item.id === id ? { ...item, image: null, masks: [] } : item
+      )
+    );
   };
 
   const exportPdf = async () => {
@@ -432,7 +539,7 @@ function App() {
       </section>
 
       <section className="preview-zone">
-        <div className="a4-page exam-page" ref={pageRef}>
+        <div className={`a4-page exam-page ${isExporting ? 'is-exporting' : ''}`} ref={pageRef}>
           <header className="exam-header three-cell-header">
             <div className="header-cell left-header-cell class-duration-header">
               <textarea
@@ -540,6 +647,13 @@ function App() {
                       </button>
                       <button
                         type="button"
+                        className="photo-tool-button"
+                        onClick={() => addMask(exercise.id)}
+                      >
+                        Rectangle blanc
+                      </button>
+                      <button
+                        type="button"
                         className="photo-tool-button danger"
                         onClick={() => clearExerciseImage(exercise.id)}
                       >
@@ -559,16 +673,47 @@ function App() {
                     </div>
                   )}
                   {exercise.image ? (
-                    <img
-                      className="draggable-photo"
-                      src={exercise.image.url}
-                      alt={exercise.image.name}
-                      onMouseDown={(event) => startDrag(event, exercise)}
-                      draggable="false"
-                      style={{
-                        transform: `translate(${exercise.x}px, ${exercise.y}px) scale(${exercise.zoom / 100})`,
-                      }}
-                    />
+                    <>
+                      <img
+                        className="draggable-photo"
+                        src={exercise.image.url}
+                        alt={exercise.image.name}
+                        onMouseDown={(event) => startDrag(event, exercise)}
+                        draggable="false"
+                        style={{
+                          transform: `translate(${exercise.x}px, ${exercise.y}px) scale(${exercise.zoom / 100})`,
+                        }}
+                      />
+                      {(exercise.masks ?? []).map((mask) => (
+                        <div
+                          className="white-mask"
+                          key={mask.id}
+                          onMouseDown={(event) => startMaskDrag(event, exercise.id, mask)}
+                          style={{
+                            left: `${mask.x}px`,
+                            top: `${mask.y}px`,
+                            width: `${mask.width}px`,
+                            height: `${mask.height}px`,
+                          }}
+                        >
+                          <button
+                            type="button"
+                            className="mask-delete-button"
+                            onMouseDown={(event) => event.stopPropagation()}
+                            onClick={(event) => {
+                              event.stopPropagation();
+                              deleteMask(exercise.id, mask.id);
+                            }}
+                          >
+                            ×
+                          </button>
+                          <span
+                            className="mask-resize-handle"
+                            onMouseDown={(event) => startMaskResize(event, exercise.id, mask)}
+                          />
+                        </div>
+                      ))}
+                    </>
                   ) : (
                     <div className="empty-zone">Clique ici pour choisir la photo</div>
                   )}
