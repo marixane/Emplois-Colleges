@@ -334,16 +334,6 @@ function App() {
 
             {exercise.image && (
               <div className="photo-controls">
-                <label>Zoom photo</label>
-                <input
-                  type="range"
-                  min="60"
-                  max="220"
-                  value={exercise.zoom}
-                  onChange={(e) => updatePhotoControl(exercise.id, 'zoom', e.target.value)}
-                />
-                <small>{exercise.zoom}%</small>
-
                 <label>Déplacement horizontal</label>
                 <input
                   type="range"
@@ -478,17 +468,33 @@ function App() {
                   title="Cliquer pour choisir ou remplacer la photo"
                 >
                   {exercise.image && (
-                    <button
-                      type="button"
-                      className="photo-delete-overlay"
-                      onClick={(event) => {
-                        event.preventDefault();
-                        event.stopPropagation();
-                        clearExerciseImage(exercise.id);
-                      }}
-                    >
-                      Supprimer
-                    </button>
+                    <div className="photo-overlay-tools" onClick={(event) => event.stopPropagation()}>
+                      <button
+                        type="button"
+                        className="photo-tool-button"
+                        onClick={() => triggerExerciseFileInput(exercise.id)}
+                      >
+                        Changer photo
+                      </button>
+                      <button
+                        type="button"
+                        className="photo-tool-button danger"
+                        onClick={() => clearExerciseImage(exercise.id)}
+                      >
+                        Supprimer
+                      </button>
+                      <label className="photo-zoom-control">
+                        Zoom
+                        <input
+                          type="range"
+                          min="60"
+                          max="220"
+                          value={exercise.zoom}
+                          onChange={(e) => updatePhotoControl(exercise.id, 'zoom', e.target.value)}
+                        />
+                        <span>{exercise.zoom}%</span>
+                      </label>
+                    </div>
                   )}
                   {exercise.image ? (
                     <img
