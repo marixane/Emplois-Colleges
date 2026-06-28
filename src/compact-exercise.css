@@ -107,19 +107,29 @@
   content: 'Durée : ';
 }
 
-.exam-page.is-exporting .inline-title-input,
-.html2canvas-container .inline-title-input {
-  height: 100% !important;
-  min-height: 52px !important;
-  overflow: hidden !important;
-  white-space: pre-wrap !important;
-  line-height: 1.18 !important;
-  text-align: center !important;
-  display: block !important;
-  padding-top: 4px !important;
-  padding-bottom: 4px !important;
-  color: #111 !important;
-  -webkit-text-fill-color: #111 !important;
+.export-title-display {
+  display: none;
+  width: 100%;
+  min-height: 52px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  white-space: pre-wrap;
+  line-height: 1.18;
+  font-weight: 800;
+  color: #111;
+  padding: 4px 8px;
+  box-sizing: border-box;
+}
+
+.exam-page.is-exporting .middle-header-cell .inline-title-input,
+.html2canvas-container .middle-header-cell .inline-title-input {
+  display: none !important;
+}
+
+.exam-page.is-exporting .export-title-display,
+.html2canvas-container .export-title-display {
+  display: flex !important;
 }
 
 .photo-overlay-tools {
