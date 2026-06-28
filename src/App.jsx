@@ -3,9 +3,9 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
 const DEFAULT_EXERCISES = [
-  { id: 'ex1', title: 'Exercice 1', points: 5, image: null, size: 80, zoom: 100, x: 0, y: 0 },
-  { id: 'ex2', title: 'Exercice 2', points: 5, image: null, size: 0, zoom: 100, x: 0, y: 0 },
-  { id: 'ex3', title: 'Exercice 3', points: 5, image: null, size: 0, zoom: 100, x: 0, y: 0 },
+  { id: 'ex1', title: 'Exercice 1', points: 7, image: null, size: 80, zoom: 100, x: 0, y: 0 },
+  { id: 'ex2', title: 'Exercice 2', points: 7, image: null, size: 0, zoom: 100, x: 0, y: 0 },
+  { id: 'ex3', title: 'Exercice 3', points: 6, image: null, size: 0, zoom: 100, x: 0, y: 0 },
 ];
 
 const DURATION_OPTIONS = ['30 min', '1 h', '1 h 30', '2 h', '2 h 30', '3 h'];
@@ -52,6 +52,7 @@ function App() {
   const pageRef = useRef(null);
 
   const duration = DURATION_OPTIONS[durationIndex];
+  const totalPoints = exercises.reduce((sum, exercise) => sum + exercise.points, 0);
 
   const changeDuration = (step) => {
     setDurationIndex((currentIndex) =>
@@ -65,20 +66,48 @@ function App() {
     );
   };
 
-  const changeExercisePoints = (id, step) => {
+  const getCompensationIndex = (index) => {
+    return index < exercises.length - 1 ? index + 1 : index - 1;
+  };
+
+  const canChangeExercisePoints = (index, step) => {
+    const compensationIndex = getCompensationIndex(index);
+    if (compensationIndex < 0) return false;
+
+    const nextTargetPoints = Math.round((exercises[index].points + step * POINT_STEP) * 100) / 100;
+    const nextCompensationPoints = Math.round((exercises[compensationIndex].points - step * POINT_STEP) * 100) / 100;
+
+    return (
+      nextTargetPoints >= MIN_POINTS &&
+      nextTargetPoints <= MAX_POINTS &&
+      nextCompensationPoints >= MIN_POINTS &&
+      nextCompensationPoints <= MAX_POINTS
+    );
+  };
+
+  const changeExercisePoints = (index, step) => {
+    if (!canChangeExercisePoints(index, step)) return;
+
+    const compensationIndex = getCompensationIndex(index);
+
     setExercises((items) =>
-      items.map((item) =>
-        item.id === id
-          ? {
-              ...item,
-              points: clamp(
-                Math.round((item.points + step * POINT_STEP) * 100) / 100,
-                MIN_POINTS,
-                MAX_POINTS
-              ),
-            }
-          : item
-      )
+      items.map((item, itemIndex) => {
+        if (itemIndex === index) {
+          return {
+            ...item,
+            points: Math.round((item.points + step * POINT_STEP) * 100) / 100,
+          };
+        }
+
+        if (itemIndex === compensationIndex) {
+          return {
+            ...item,
+            points: Math.round((item.points - step * POINT_STEP) * 100) / 100,
+          };
+        }
+
+        return item;
+      })
     );
   };
 
@@ -208,7 +237,7 @@ function App() {
         <p className="eyebrow">A4 Exam Maker</p>
         <h1>Créer une feuille A4 avec entête fixe</h1>
         <p className="intro">
-          Les points se règlent avec - et + par pas de 0,25. Par défaut : 5 points.
+          Les noms des exercices sont fixes. La somme des points reste exactement 20.
         </p>
 
         <div className="form-group">
@@ -261,23 +290,22 @@ function App() {
 
         <hr />
 
+        <p className="points-total">Total : {formatPoints(totalPoints)}</p>
+
         {exercises.map((exercise, index) => (
           <div className="exercise-control" key={exercise.id}>
             <div className="two-cols">
               <div>
                 <label>Nom exercice</label>
-                <input
-                  value={exercise.title}
-                  onChange={(e) => updateExercise(exercise.id, 'title', e.target.value)}
-                />
+                <div className="exercise-name-display">{exercise.title}</div>
               </div>
               <div>
                 <label>Points</label>
                 <div className="points-control">
                   <button
                     type="button"
-                    onClick={() => changeExercisePoints(exercise.id, -1)}
-                    disabled={exercise.points <= MIN_POINTS}
+                    onClick={() => changeExercisePoints(index, -1)}
+                    disabled={!canChangeExercisePoints(index, -1)}
                     aria-label={`Diminuer les points de ${exercise.title}`}
                   >
                     −
@@ -285,8 +313,8 @@ function App() {
                   <strong>{formatPoints(exercise.points)}</strong>
                   <button
                     type="button"
-                    onClick={() => changeExercisePoints(exercise.id, 1)}
-                    disabled={exercise.points >= MAX_POINTS}
+                    onClick={() => changeExercisePoints(index, 1)}
+                    disabled={!canChangeExercisePoints(index, 1)}
                     aria-label={`Augmenter les points de ${exercise.title}`}
                   >
                     +
