@@ -74,6 +74,23 @@
   color: #334155 !important;
 }
 
+.global-preview-zoom-button {
+  position: fixed !important;
+  top: 14px !important;
+  right: 18px !important;
+  z-index: 99999 !important;
+  min-height: 38px !important;
+  padding: 8px 14px !important;
+  border: 2px solid #2563eb !important;
+  border-radius: 12px !important;
+  background: #eef6ff !important;
+  color: #111827 !important;
+  font-size: 15px !important;
+  font-weight: 900 !important;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.25) !important;
+  cursor: pointer;
+}
+
 .preview-zone {
   display: flex !important;
   flex-direction: row !important;
@@ -90,6 +107,14 @@
   flex: 0 0 794px !important;
   width: 794px !important;
   margin: 0 !important;
+}
+
+.site-preview-zoom-75 .preview-zone .a4-page:not(.is-exporting) {
+  zoom: 0.75 !important;
+}
+
+.site-preview-zoom-60 .preview-zone .a4-page:not(.is-exporting) {
+  zoom: 0.6 !important;
 }
 
 .exam-page.is-exporting .exercise-body {
