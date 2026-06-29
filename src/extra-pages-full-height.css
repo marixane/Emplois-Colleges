@@ -25,12 +25,12 @@
 
 .preview-zone .second-page .exam-exercise {
   flex: 0 1 auto;
-  min-height: 120px !important;
+  min-height: 55px !important;
 }
 
 .preview-zone .second-page .exam-exercise:last-child {
-  flex: 1 1 120px !important;
-  min-height: 120px !important;
+  flex: 1 1 55px !important;
+  min-height: 55px !important;
 }
 
 .preview-zone .a4-page.exam-page:not(.second-page) .exercise-list {
