@@ -34,7 +34,7 @@ label.total-mode-control input {
 
 .exam-page.is-exporting .exercise-body {
   background-color: #ffffff !important;
-  background-image: linear-gradient(to bottom, transparent 0, transparent 28px, rgba(150, 150, 150, 0.38) 28px, rgba(150, 150, 150, 0.38) 28.35px, transparent 28.35px) !important;
+  background-image: linear-gradient(to bottom, transparent 0, transparent 27px, #d4d4d4 28px, #d4d4d4 28.7px, transparent 28.7px) !important;
   background-size: 100% 29px !important;
   background-repeat: repeat !important;
 }
