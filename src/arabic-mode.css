@@ -43,6 +43,14 @@ body.arabic-mode .exercise-title {
   left: auto !important;
   right: 12px !important;
   z-index: 120 !important;
+  border: 3px solid #111111 !important;
+  box-shadow: 0 0 0 1px #111111 !important;
+  background: #ffffff !important;
+}
+
+body.arabic-mode .exercise-title-controls {
+  border: 0 !important;
+  box-shadow: none !important;
 }
 
 body.arabic-mode .exam-page:not(.has-bar-ribbon) .exercise-body::before,
