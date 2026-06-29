@@ -4,11 +4,11 @@
   grid-template-columns: 24px 1fr 24px !important;
   align-items: center !important;
   justify-content: center !important;
-  width: 150px !important;
-  max-width: 150px !important;
+  width: 170px !important;
+  max-width: 170px !important;
   min-height: 28px !important;
   height: 28px !important;
-  gap: 3px !important;
+  gap: 5px !important;
   padding: 0 !important;
   margin-top: 2px !important;
   border: 0 !important;
@@ -38,8 +38,8 @@
 .tiny-duration-control strong {
   position: relative !important;
   z-index: 1 !important;
-  min-width: 74px !important;
-  padding: 0 10px !important;
+  min-width: 96px !important;
+  padding: 0 14px !important;
   color: #111111 !important;
   font-size: 15px !important;
   font-weight: 900 !important;
@@ -50,4 +50,8 @@
   border-radius: 999px !important;
   box-shadow: none !important;
   white-space: nowrap !important;
+}
+
+.tiny-duration-control strong::before {
+  content: '\00a0' !important;
 }
