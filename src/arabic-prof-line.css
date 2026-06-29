@@ -1,8 +1,15 @@
 body.arabic-mode .split-title-cell .title-line-bottom {
-  display: block !important;
-  font-size: 15px !important;
+  display: none !important;
 }
 
 body.arabic-mode .split-title-cell {
-  gap: 1mm !important;
+  gap: 2mm !important;
+}
+
+body.arabic-mode .exam-header.three-cell-header {
+  direction: ltr !important;
+}
+
+body.arabic-mode .exam-header .header-cell {
+  direction: rtl !important;
 }
