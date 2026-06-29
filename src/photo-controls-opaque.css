@@ -1,0 +1,25 @@
+.photo-overlay-tools {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+.clickable-photo-zone:hover .photo-overlay-tools,
+.photo-overlay-tools:hover {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+.photo-overlay-tools .photo-tool-button,
+.photo-overlay-tools .photo-zoom-control {
+  opacity: 1 !important;
+  background: #ffffff !important;
+  color: #111111 !important;
+  border: 2px solid #111111 !important;
+  font-weight: 900 !important;
+}
+
+.photo-overlay-tools .photo-tool-button.danger {
+  background: #ffffff !important;
+  color: #b00020 !important;
+  border-color: #b00020 !important;
+}
