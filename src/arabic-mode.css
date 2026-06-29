@@ -43,14 +43,20 @@ body.arabic-mode .exercise-title {
   left: auto !important;
   right: 12px !important;
   z-index: 120 !important;
-  border: 3px solid #111111 !important;
-  box-shadow: 0 0 0 1px #111111 !important;
+  overflow: visible !important;
   background: #ffffff !important;
+  border: 0 !important;
+  box-shadow: none !important;
 }
 
 body.arabic-mode .exercise-title-controls {
-  border: 0 !important;
-  box-shadow: none !important;
+  position: relative !important;
+  overflow: visible !important;
+  border: 3px solid #111111 !important;
+  border-radius: 10px !important;
+  background: #ffffff !important;
+  box-shadow: 0 0 0 1px #111111 !important;
+  z-index: 121 !important;
 }
 
 body.arabic-mode .exam-page:not(.has-bar-ribbon) .exercise-body::before,
