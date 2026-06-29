@@ -176,8 +176,15 @@ body,
 .photo-overlay-tools {
   gap: 8px !important;
   flex-wrap: wrap !important;
-  opacity: 0.7 !important;
+  opacity: 0 !important;
+  pointer-events: none;
   transition: opacity 0.15s ease;
+}
+
+.clickable-photo-zone:hover .photo-overlay-tools,
+.photo-overlay-tools:hover {
+  opacity: 0.88 !important;
+  pointer-events: auto;
 }
 
 .photo-overlay-tools:hover {
