@@ -20,9 +20,31 @@
 }
 
 .total-mode-control {
-  height: 28px !important;
-  min-height: 28px !important;
+  width: 100% !important;
+  min-height: 50px !important;
+  height: 50px !important;
+  margin-top: 4px !important;
+  padding: 5px 6px !important;
+  border-radius: 9px !important;
+  align-self: stretch !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  text-align: center !important;
+  background: #ecfdf5 !important;
+  border: 1px solid #86efac !important;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08) !important;
+  color: #065f46 !important;
   font-size: 12px !important;
+  font-weight: 900 !important;
+  line-height: 1.15 !important;
+}
+
+.total-mode-control input {
+  width: 13px !important;
+  height: 13px !important;
+  margin: 0 !important;
 }
 
 .page-count-card {
