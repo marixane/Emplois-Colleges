@@ -204,22 +204,7 @@
 }
 
 .exam-page.has-bar-ribbon::before {
-  content: '';
-  position: absolute;
-  left: 30px;
-  top: 181px;
-  bottom: 34px;
-  width: 22px;
-  border-left: 2px solid rgba(120, 120, 120, 0.38);
-  border-right: 2px solid rgba(120, 120, 120, 0.38);
-  background: linear-gradient(to right, rgba(160, 160, 160, 0.02), rgba(160, 160, 160, 0.10), rgba(160, 160, 160, 0.02));
-  border-radius: 0 0 8px 8px;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.exam-page.second-page.has-bar-ribbon::before {
-  top: 26px;
+  display: none !important;
 }
 
 .exam-page.has-bar-ribbon .exam-header,
@@ -228,8 +213,26 @@
   z-index: 1;
 }
 
-.exam-page.has-bar-ribbon .exam-exercise {
-  background: transparent !important;
+.exam-page.has-bar-ribbon .exercise-body::before {
+  content: '';
+  position: absolute;
+  left: 20px;
+  top: 0;
+  bottom: 0;
+  width: 26px;
+  border-left: 2px solid rgba(120, 120, 120, 0.42);
+  border-right: 2px solid rgba(120, 120, 120, 0.42);
+  background: linear-gradient(to right, rgba(150, 150, 150, 0.03), rgba(150, 150, 150, 0.15), rgba(150, 150, 150, 0.03));
+  z-index: 2;
+  pointer-events: none;
+}
+
+.exam-page.has-bar-ribbon .draggable-photo,
+.exam-page.has-bar-ribbon .white-mask,
+.exam-page.has-bar-ribbon .empty-zone,
+.exam-page.has-bar-ribbon .photo-overlay-tools {
+  position: relative;
+  z-index: 3;
 }
 
 .exam-page.has-bar-ribbon .page-number {
@@ -244,6 +247,10 @@
   background-image: linear-gradient(to bottom, transparent 0, transparent 27px, #d9d9d9 28px, #d9d9d9 29px) !important;
   background-size: 100% 29px !important;
   background-repeat: repeat !important;
+}
+
+.exam-page.is-exporting.has-bar-ribbon .exercise-body::before {
+  z-index: 2;
 }
 
 .exam-page.is-exporting.no-pdf-lines .exercise-body {
