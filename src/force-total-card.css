@@ -31,3 +31,15 @@ label.total-mode-control input {
 .points-total {
   display: none !important;
 }
+
+.exam-page.is-exporting .exercise-body {
+  background-color: #ffffff !important;
+  background-image: linear-gradient(to bottom, transparent 0, transparent 28px, rgba(150, 150, 150, 0.38) 28px, rgba(150, 150, 150, 0.38) 28.35px, transparent 28.35px) !important;
+  background-size: 100% 29px !important;
+  background-repeat: repeat !important;
+}
+
+.exam-page.is-exporting.no-pdf-lines .exercise-body {
+  background-image: none !important;
+  background-color: #ffffff !important;
+}
