@@ -8,6 +8,8 @@ body.arabic-mode .split-title-cell {
 
 body.arabic-mode .exam-header.three-cell-header {
   direction: ltr !important;
+  display: grid !important;
+  grid-template-columns: 1fr 1fr 1fr !important;
 }
 
 body.arabic-mode .exam-header .header-cell {
@@ -17,14 +19,26 @@ body.arabic-mode .exam-header .header-cell {
 body.arabic-mode .left-header-cell {
   grid-column: 3 !important;
   order: 3 !important;
+  border-left: 1px solid #111111 !important;
+  border-right: 0 !important;
 }
 
 body.arabic-mode .middle-header-cell {
   grid-column: 2 !important;
   order: 2 !important;
+  border-left: 1px solid #111111 !important;
+  border-right: 0 !important;
 }
 
 body.arabic-mode .right-header-cell {
   grid-column: 1 !important;
   order: 1 !important;
+  border-left: 0 !important;
+  border-right: 0 !important;
+}
+
+body.arabic-mode .exam-header .title-line-top,
+body.arabic-mode .exam-header .right-line-top,
+body.arabic-mode .exam-header .inline-class-input {
+  transform: translateY(3mm) !important;
 }
