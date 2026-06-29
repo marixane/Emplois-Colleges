@@ -13,6 +13,11 @@ body.arabic-mode .exam-header input {
   text-align: center !important;
 }
 
+body.arabic-mode .exam-page.has-bar-ribbon .exam-exercise,
+body.arabic-mode .exam-page.has-bar-ribbon .exercise-body {
+  overflow: visible !important;
+}
+
 body.arabic-mode .exercise-title {
   left: auto !important;
   right: 12px !important;
@@ -36,7 +41,7 @@ body.arabic-mode .exam-page.has-bar-ribbon .exercise-body::before {
   border-left: 2px solid #9a9a9a !important;
   border-right: 2px solid #9a9a9a !important;
   box-shadow: none !important;
-  z-index: 110 !important;
+  z-index: 9999 !important;
 }
 
 body.arabic-mode .exam-page.has-bar-ribbon .exercise-body::after {
@@ -54,7 +59,7 @@ body.arabic-mode .exam-page.has-bar-ribbon .exam-exercise:first-child .exercise-
   line-height: 1.05 !important;
   white-space: pre-line !important;
   text-align: center !important;
-  z-index: 112 !important;
+  z-index: 10000 !important;
 }
 
 body.arabic-mode .exam-page.has-bar-ribbon .exercise-body {
@@ -74,7 +79,7 @@ body.arabic-mode .exam-page.has-bar-ribbon .bar-buttons {
 body.arabic-mode .exam-page.has-bar-ribbon .bar-mark {
   left: auto !important;
   right: 7px !important;
-  z-index: 114 !important;
+  z-index: 10001 !important;
   background: transparent !important;
   color: #555555 !important;
   font-size: 12px !important;
