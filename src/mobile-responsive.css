@@ -12,34 +12,13 @@
     min-width: 0 !important;
     display: flex !important;
     flex-direction: column !important;
-    gap: 14px !important;
-    padding: 10px !important;
+    gap: 0 !important;
+    padding: 0 !important;
     box-sizing: border-box !important;
   }
 
   .panel {
-    width: 100% !important;
-    max-width: none !important;
-    min-width: 0 !important;
-    position: relative !important;
-    top: auto !important;
-    left: auto !important;
-    margin: 0 !important;
-    padding: 12px !important;
-    box-sizing: border-box !important;
-  }
-
-  .panel button,
-  .panel label,
-  .duration-control button,
-  .compact-control button {
-    min-height: 38px !important;
-    touch-action: manipulation !important;
-  }
-
-  .page-count-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 8px !important;
+    display: none !important;
   }
 
   .preview-zone {
@@ -83,9 +62,5 @@
 @media (max-width: 430px) {
   .preview-zone .a4-page {
     transform: scale(0.40) !important;
-  }
-
-  .page-count-grid {
-    grid-template-columns: 1fr !important;
   }
 }
