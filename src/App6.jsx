@@ -19,6 +19,7 @@ const fmt = (v) => {
 };
 const pts = (n) => {
   if (!n) return [];
+  if (n === 3) return [7, 7, 6];
   const base = Math.round((TOTAL / n) / 0.25) * 0.25;
   const arr = Array.from({ length: n }, () => base);
   arr[n - 1] = Math.round((arr[n - 1] + TOTAL - arr.reduce((s, x) => s + x, 0)) * 100) / 100;
