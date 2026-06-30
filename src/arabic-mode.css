@@ -143,19 +143,19 @@ body.arabic-mode .exercise-title-controls > button:first-of-type {
 
 body.arabic-mode .exercise-title-controls > span.points-decoration:nth-of-type(2) {
   order: 3 !important;
-  margin: 0 0.4mm 0 0 !important;
+  margin: 0 0.15mm 0 0 !important;
   white-space: nowrap !important;
 }
 
 body.arabic-mode .exercise-title-controls > strong {
   order: 4 !important;
-  margin: 0 0.4mm !important;
+  margin: 0 0.15mm !important;
   white-space: nowrap !important;
 }
 
 body.arabic-mode .exercise-title-controls > span.points-decoration:nth-of-type(3) {
   order: 5 !important;
-  margin: 0 0 0 0.4mm !important;
+  margin: 0 0 0 0.15mm !important;
   white-space: nowrap !important;
 }
 
