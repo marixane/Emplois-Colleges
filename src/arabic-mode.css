@@ -264,19 +264,19 @@ body.a4-overview-mode .preview-zone .exam-page {
 }
 
 body.a4-overview-mode.a4-overview-zoom-1 .preview-zone .exam-page {
-  zoom: 0.25 !important;
+  zoom: 0.55 !important;
 }
 
 body.a4-overview-mode.a4-overview-zoom-2 .preview-zone .exam-page {
-  zoom: 0.32 !important;
-}
-
-body.a4-overview-mode.a4-overview-zoom-3 .preview-zone .exam-page {
   zoom: 0.42 !important;
 }
 
+body.a4-overview-mode.a4-overview-zoom-3 .preview-zone .exam-page {
+  zoom: 0.32 !important;
+}
+
 body.a4-overview-mode.a4-overview-zoom-4 .preview-zone .exam-page {
-  zoom: 0.55 !important;
+  zoom: 0.25 !important;
 }
 
 body.arabic-mode .panel .bar-ribbon-toggle::after {
