@@ -265,3 +265,35 @@ body.arabic-mode .photo-overlay-tools {
   left: 8px !important;
   justify-content: start !important;
 }
+
+body.a4-overview-mode .preview-zone {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-content: flex-start !important;
+  align-items: flex-start !important;
+  gap: 18px !important;
+  padding: 8px !important;
+  overflow: auto !important;
+}
+
+body.a4-overview-mode .preview-zone .exam-page {
+  transform: scale(0.32) !important;
+  transform-origin: top left !important;
+  margin-right: -540px !important;
+  margin-bottom: -760px !important;
+  box-shadow: 0 10px 22px rgba(15, 23, 42, 0.22) !important;
+}
+
+body.arabic-mode.a4-overview-mode .preview-zone .exam-page {
+  transform: scale(0.32) scaleX(-1) !important;
+  transform-origin: top left !important;
+}
+
+body.arabic-mode.a4-overview-mode .preview-zone .exam-page > * {
+  transform: scaleX(-1) !important;
+}
+
+body.arabic-mode.a4-overview-mode .preview-zone .exam-page .page-number,
+body.arabic-mode.a4-overview-mode .preview-zone .exam-page .page-date {
+  transform: translateX(-50%) scaleX(-1) !important;
+}
