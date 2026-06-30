@@ -103,6 +103,11 @@ body.arabic-mode .exam-page .exercise-title {
   padding-right: 16px !important;
 }
 
+body.arabic-mode .exam-page.is-exporting .exercise-title {
+  padding-left: 70px !important;
+  padding-right: 16px !important;
+}
+
 body.arabic-mode .resize-handle {
   left: auto !important;
   right: 40% !important;
