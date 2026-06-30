@@ -32,8 +32,6 @@
   transition: opacity 0.08s ease !important;
 }
 
-.exam-exercise:hover .bar-buttons,
-.exercise-body:hover .bar-buttons,
 .bar-buttons:hover,
 .bar-buttons:focus-within {
   opacity: 1 !important;
