@@ -65,6 +65,19 @@ body.arabic-mode .tiny-duration-control strong {
 body.arabic-mode .page-count-card .compact-control strong {
   direction: ltr !important;
   unicode-bidi: isolate !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+}
+
+body.arabic-mode .page-count-card .compact-control strong .arabic-count-letter {
+  order: 1 !important;
+}
+
+body.arabic-mode .page-count-card .compact-control strong .arabic-count-number {
+  order: 2 !important;
 }
 
 body:not(.arabic-mode) .tiny-duration-control strong {
