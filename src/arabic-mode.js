@@ -2,12 +2,14 @@ window.__examLanguage = window.__examLanguage || localStorage.getItem('examLangu
 
 const FR_HEADER = {
   rightTop: 'Lycée El jamai ,Tanger',
-  individualTitle: 'Devoir individuel'
+  individualTitle: 'Devoir individuel',
+  subject: 'Mathématique'
 };
 
 const AR_HEADER = {
   rightTop: 'ثانوية الجامعي، طنجة',
-  individualTitle: 'فرض محروس'
+  individualTitle: 'فرض محروس',
+  subject: 'الرياضيات'
 };
 
 function setInputValue(selector, value) {
@@ -25,9 +27,16 @@ function syncHeaderLanguage() {
 
   var titleTop = document.querySelector('.title-line-top');
   if (titleTop) {
-    var current = titleTop.value || '';
-    var isIndividual = current === FR_HEADER.individualTitle || current === AR_HEADER.individualTitle;
+    var currentTop = titleTop.value || '';
+    var isIndividual = currentTop === FR_HEADER.individualTitle || currentTop === AR_HEADER.individualTitle;
     if (isIndividual) setInputValue('.title-line-top', header.individualTitle);
+  }
+
+  var titleMiddle = document.querySelector('.title-line-middle');
+  if (titleMiddle) {
+    var currentMiddle = titleMiddle.value || '';
+    var isSubject = currentMiddle === FR_HEADER.subject || currentMiddle === AR_HEADER.subject;
+    if (isSubject) setInputValue('.title-line-middle', header.subject);
   }
 }
 
