@@ -68,15 +68,28 @@ body.arabic-mode .exam-page.has-bar-ribbon .exam-exercise {
 body.arabic-mode .exam-page.has-bar-ribbon .bar-buttons {
   left: auto !important;
   right: 38px !important;
-  direction: rtl !important;
-  transform: scaleX(-1) !important;
+  direction: ltr !important;
+  transform: none !important;
   transform-origin: center center !important;
 }
 
 body.arabic-mode .exam-page.has-bar-ribbon .bar-buttons button {
-  transform: scaleX(-1) !important;
+  transform: none !important;
   transform-origin: center center !important;
 }
+
+body.arabic-mode .exam-page.has-bar-ribbon .bar-buttons button:nth-child(1) { grid-column: 6 !important; grid-row: 1 !important; }
+body.arabic-mode .exam-page.has-bar-ribbon .bar-buttons button:nth-child(2) { grid-column: 5 !important; grid-row: 1 !important; }
+body.arabic-mode .exam-page.has-bar-ribbon .bar-buttons button:nth-child(3) { grid-column: 4 !important; grid-row: 1 !important; }
+body.arabic-mode .exam-page.has-bar-ribbon .bar-buttons button:nth-child(4) { grid-column: 3 !important; grid-row: 1 !important; }
+body.arabic-mode .exam-page.has-bar-ribbon .bar-buttons button:nth-child(5) { grid-column: 2 !important; grid-row: 1 !important; }
+body.arabic-mode .exam-page.has-bar-ribbon .bar-buttons button:nth-child(6) { grid-column: 1 !important; grid-row: 1 !important; }
+body.arabic-mode .exam-page.has-bar-ribbon .bar-buttons button:nth-child(7) { grid-column: 6 !important; grid-row: 2 !important; }
+body.arabic-mode .exam-page.has-bar-ribbon .bar-buttons button:nth-child(8) { grid-column: 5 !important; grid-row: 2 !important; }
+body.arabic-mode .exam-page.has-bar-ribbon .bar-buttons button:nth-child(9) { grid-column: 4 !important; grid-row: 2 !important; }
+body.arabic-mode .exam-page.has-bar-ribbon .bar-buttons button:nth-child(10) { grid-column: 3 !important; grid-row: 2 !important; }
+body.arabic-mode .exam-page.has-bar-ribbon .bar-buttons button:nth-child(11) { grid-column: 2 !important; grid-row: 2 !important; }
+body.arabic-mode .exam-page.has-bar-ribbon .bar-buttons button:nth-child(12) { grid-column: 1 !important; grid-row: 2 !important; }
 
 body.arabic-mode .exam-page.has-bar-ribbon .bar-mark {
   left: auto !important;
