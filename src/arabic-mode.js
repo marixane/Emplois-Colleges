@@ -89,6 +89,7 @@ function syncLanguageButton() {
     individualButton.type = 'button';
     individualButton.textContent = 'Individel';
     individualButton.addEventListener('click', function () {
+      document.body.classList.toggle('no-title-points');
       var barButton = document.querySelector('.bar-ribbon-toggle');
       if (barButton) barButton.click();
     });
@@ -97,6 +98,7 @@ function syncLanguageButton() {
     else panel.appendChild(individualButton);
   }
 
+  individualButton.classList.toggle('active', document.body.classList.contains('no-title-points'));
   button.textContent = window.__examLanguage === 'ar' ? 'Français' : 'العربية';
 }
 
