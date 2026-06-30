@@ -150,13 +150,13 @@
 }
 
 .panel {
-  max-height: calc(100vh - 20px) !important;
+  max-height: none !important;
   height: auto !important;
   min-height: 0 !important;
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
-  position: sticky !important;
-  top: 10px !important;
+  overflow-y: visible !important;
+  overflow-x: visible !important;
+  position: static !important;
+  top: auto !important;
   align-self: flex-start !important;
-  overscroll-behavior: contain !important;
+  overscroll-behavior: auto !important;
 }
