@@ -1,0 +1,10 @@
+body.arabic-mode .panel .pdf-lines-toggle::after,
+body.arabic-mode .panel .bar-ribbon-toggle::after {
+  font-size: 13.5px !important;
+  line-height: 1.18 !important;
+  font-weight: 950 !important;
+}
+
+body.arabic-mode .panel .bar-ribbon-toggle::after {
+  line-height: 1.12 !important;
+}
