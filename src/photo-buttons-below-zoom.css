@@ -22,15 +22,18 @@
 .bar-buttons {
   opacity: 0 !important;
   pointer-events: auto !important;
-  padding: 9px 9px 8px !important;
-  margin: -9px -9px -8px !important;
-  border-radius: 14px !important;
+  padding: 18px 18px 16px !important;
+  margin: -18px -18px -16px !important;
+  border-radius: 18px !important;
   display: grid !important;
   grid-template-columns: repeat(6, 32px) !important;
   grid-template-rows: repeat(2, 18px) !important;
   gap: 3px !important;
+  transition: opacity 0.08s ease !important;
 }
 
+.exam-exercise:hover .bar-buttons,
+.exercise-body:hover .bar-buttons,
 .bar-buttons:hover,
 .bar-buttons:focus-within {
   opacity: 1 !important;
