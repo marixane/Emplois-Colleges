@@ -1,0 +1,17 @@
+body.no-title-points .note-scale-control,
+body.no-title-points .bar-ribbon-toggle,
+body.no-title-points .bar-buttons,
+body.no-title-points .bar-mark {
+  display: none !important;
+}
+
+body.no-title-points .exercise-title-controls button,
+body.no-title-points .exercise-title-controls strong,
+body.no-title-points .exercise-title-controls .points-decoration {
+  display: none !important;
+}
+
+body.no-title-points .exercise-title-controls {
+  gap: 0 !important;
+  padding: 3px 16px !important;
+}
