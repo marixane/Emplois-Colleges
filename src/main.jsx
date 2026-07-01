@@ -66,5 +66,6 @@ import './arabic-toggle-label-bigger.css';
 import './a4-exam-title.js';
 import './page-exos-label.css';
 import './page-exos-label.js';
+import './preview-spacing-polish.css';
 
 createRoot(document.getElementById('root')).render(<React.StrictMode><App /></React.StrictMode>);
