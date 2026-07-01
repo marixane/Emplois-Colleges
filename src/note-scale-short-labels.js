@@ -4,6 +4,12 @@ function updateNoteScaleLabels() {
     if (text === 'Sur 10') button.textContent = '/ 10';
     if (text === 'Sur 20') button.textContent = '/ 20';
   });
+
+  document.querySelectorAll('.note-scale-counter').forEach(function (counter) {
+    var text = counter.textContent || '';
+    var match = text.match(/Total\s*:\s*([0-9]+(?:[,.][0-9]+)?)/i);
+    if (match) counter.textContent = match[1].replace('.', ',');
+  });
 }
 
 updateNoteScaleLabels();
