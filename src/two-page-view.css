@@ -85,11 +85,12 @@ body.two-page-view .preview-zone {
   grid-template-columns: repeat(2, 794px) !important;
   column-gap: 16px !important;
   row-gap: 34px !important;
-  width: 1620px !important;
-  min-width: 1620px !important;
+  width: 1604px !important;
+  min-width: 1604px !important;
   max-width: none !important;
   overflow: visible !important;
   padding-left: 4px !important;
+  transform-origin: top left !important;
 }
 
 body.two-page-view .preview-zone .a4-page,
@@ -102,14 +103,14 @@ body.two-page-view .a4-page:last-child {
   margin-bottom: 220px !important;
 }
 
-@media (max-width: 1850px) {
-  body.two-page-view .preview-zone {
-    transform: scale(0.84) !important;
-    transform-origin: top left !important;
-    width: 1620px !important;
-    min-width: 1620px !important;
-  }
-}
+body.two-page-view.two-page-zoom-100 .preview-zone { transform: scale(1) !important; }
+body.two-page-view.two-page-zoom-95 .preview-zone { transform: scale(0.95) !important; }
+body.two-page-view.two-page-zoom-90 .preview-zone { transform: scale(0.90) !important; }
+body.two-page-view.two-page-zoom-84 .preview-zone { transform: scale(0.84) !important; }
+body.two-page-view.two-page-zoom-78 .preview-zone { transform: scale(0.78) !important; }
+body.two-page-view.two-page-zoom-72 .preview-zone { transform: scale(0.72) !important; }
+body.two-page-view.two-page-zoom-66 .preview-zone { transform: scale(0.66) !important; }
+body.two-page-view.two-page-zoom-60 .preview-zone { transform: scale(0.60) !important; }
 
 @media print {
   .two-page-view-toggle {
