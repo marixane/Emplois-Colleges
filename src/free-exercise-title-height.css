@@ -10,4 +10,6 @@ body.no-title-points .exam-exercise:not(.blank-exercise) .exercise-title-control
 
 body.no-title-points .exam-exercise:not(.blank-exercise) .exercise-title-controls span:first-child {
   line-height: 20px !important;
+  display: inline-block !important;
+  transform: translateX(8px) !important;
 }
