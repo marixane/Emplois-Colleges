@@ -186,11 +186,25 @@ body.hide-page-date .page-date {
   text-align: center !important;
 }
 
-.page-date-day:hover,
-.page-date-day.active {
+.page-date-day.today {
+  background: #e0f2fe !important;
+  border-color: #38bdf8 !important;
+  color: #075985 !important;
+  box-shadow: inset 0 0 0 1px #38bdf8 !important;
+}
+
+.page-date-day:hover {
+  background: #f0fdf4 !important;
+  border-color: #22c55e !important;
+  color: #065f46 !important;
+}
+
+.page-date-day.active,
+.page-date-day.active.today {
   background: #dcfce7 !important;
   border-color: #22c55e !important;
   color: #065f46 !important;
+  box-shadow: inset 0 0 0 2px #16a34a !important;
 }
 
 .page-date-toggle-button {
