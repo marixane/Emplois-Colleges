@@ -109,7 +109,7 @@ export default function App6() {
   const changeNoteTotal = (targetTotal) => {
     const nextTotal = noteTotal === targetTotal ? null : targetTotal;
     setNoteTotal(nextTotal);
-    if (!nextTotal) setBarRibbon(false);
+    if (!nextTotal) setBarRibbon((v) => !v);
     if (nextTotal) setPages((cur) => balance(cur, nextTotal));
   };
   const setCount = (page, d) => {
