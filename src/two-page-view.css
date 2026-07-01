@@ -146,6 +146,23 @@ body .a4-page {
   justify-self: start !important;
 }
 
+body .preview-zone .a4-page.is-exporting,
+body .a4-page.is-exporting,
+body .preview-zone .exam-page.is-exporting,
+body .exam-page.is-exporting {
+  width: 794px !important;
+  height: 1123px !important;
+  min-width: 794px !important;
+  min-height: 1123px !important;
+  max-width: 794px !important;
+  max-height: 1123px !important;
+  transform: none !important;
+  scale: 1 !important;
+  translate: 0 0 !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+}
+
 body .preview-zone .a4-page:last-child,
 body .a4-page:last-child {
   margin-bottom: 220px !important;
