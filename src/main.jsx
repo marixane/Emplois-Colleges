@@ -70,5 +70,7 @@ import './preview-spacing-polish.css';
 import './top-education-navbar.css';
 import './top-education-navbar.js';
 import './free-exercise-title-height.css';
+import './two-page-view.css';
+import './two-page-view.js';
 
 createRoot(document.getElementById('root')).render(<React.StrictMode><App /></React.StrictMode>);
