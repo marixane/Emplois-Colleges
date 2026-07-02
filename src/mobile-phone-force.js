@@ -28,7 +28,7 @@ function applyMobilePhoneForce() {
         min-height: 100vh !important;
         max-height: 100vh !important;
         display: grid !important;
-        grid-template-columns: 20vw 80vw !important;
+        grid-template-columns: 10vw 90vw !important;
         grid-template-rows: 100vh !important;
         gap: 0 !important;
         padding: 0 !important;
@@ -41,11 +41,11 @@ function applyMobilePhoneForce() {
 
       body .panel {
         grid-column: 1 !important;
-        width: 20vw !important;
-        min-width: 20vw !important;
-        max-width: 20vw !important;
-        flex: 0 0 20vw !important;
-        flex-basis: 20vw !important;
+        width: 10vw !important;
+        min-width: 10vw !important;
+        max-width: 10vw !important;
+        flex: 0 0 10vw !important;
+        flex-basis: 10vw !important;
         height: 100vh !important;
         min-height: 100vh !important;
         max-height: 100vh !important;
@@ -188,10 +188,10 @@ function applyMobilePhoneForce() {
 
       body .preview-zone {
         grid-column: 2 !important;
-        width: 80vw !important;
-        min-width: 80vw !important;
-        max-width: 80vw !important;
-        flex: 0 0 80vw !important;
+        width: 90vw !important;
+        min-width: 90vw !important;
+        max-width: 90vw !important;
+        flex: 0 0 90vw !important;
         flex-shrink: 1 !important;
         height: 100vh !important;
         min-height: 100vh !important;
@@ -213,9 +213,9 @@ function applyMobilePhoneForce() {
 
       body .preview-zone .a4-page,
       body .a4-page {
-        transform: scale(0.47) !important;
+        transform: scale(0.52) !important;
         transform-origin: top left !important;
-        margin: 0 0 -430px 0 !important;
+        margin: 0 0 -375px 0 !important;
         flex: 0 0 auto !important;
         translate: 0 0 !important;
       }
@@ -224,8 +224,8 @@ function applyMobilePhoneForce() {
     @media (max-width: 430px) {
       body .preview-zone .a4-page,
       body .a4-page {
-        transform: scale(0.45) !important;
-        margin-bottom: -455px !important;
+        transform: scale(0.50) !important;
+        margin-bottom: -400px !important;
       }
     }
   `;
