@@ -3,10 +3,15 @@ body.no-title-points .bar-mark {
   display: none !important;
 }
 
-body.no-title-points .exercise-title-controls button,
-body.no-title-points .exercise-title-controls strong,
-body.no-title-points .exercise-title-controls .points-decoration {
+body.no-title-points .exercise-title-controls > button,
+body.no-title-points .exercise-title-controls > strong,
+body.no-title-points .exercise-title-controls > .points-decoration {
   display: none !important;
+}
+
+body.no-title-points .exercise-title-controls .exercise-line-count-controls,
+body.no-title-points .exercise-title-controls .exercise-line-count-controls button {
+  display: inline-flex !important;
 }
 
 body.no-title-points .exercise-title-controls {
