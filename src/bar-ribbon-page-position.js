@@ -26,6 +26,30 @@ function findNoteScaleOriginal(label) {
   }) || null;
 }
 
+function isBarRibbonVisible() {
+  return !!document.querySelector('.a4-page.has-bar-ribbon');
+}
+
+function restoreBarRibbonState(wasVisible) {
+  setTimeout(function () {
+    if (isBarRibbonVisible() === wasVisible) return;
+    var b = getOriginal('.bar-ribbon-toggle');
+    if (b && !b.disabled) b.click();
+  }, 40);
+  setTimeout(function () {
+    if (isBarRibbonVisible() === wasVisible) return;
+    var b = getOriginal('.bar-ribbon-toggle');
+    if (b && !b.disabled) b.click();
+  }, 140);
+}
+
+function clickNoteWithoutChangingBar(label) {
+  var wasVisible = isBarRibbonVisible();
+  var current = findNoteScaleOriginal(label);
+  if (current && !current.disabled) current.click();
+  restoreBarRibbonState(wasVisible);
+}
+
 function makeProxy(classes, title, text, action) {
   var page = document.querySelector('.a4-page');
   if (!page) return null;
@@ -78,15 +102,13 @@ function syncA4ProxyControls() {
 
   var original10 = findNoteScaleOriginal('/10');
   var note10 = makeProxy('a4-top-control a4-text-control a4-note10-proxy', 'Note sur 10', '/10', function () {
-    var current = findNoteScaleOriginal('/10');
-    if (current && !current.disabled) current.click();
+    clickNoteWithoutChangingBar('/10');
   });
   if (note10) note10.disabled = original10 ? original10.disabled : true;
 
   var original20 = findNoteScaleOriginal('/20');
   var note20 = makeProxy('a4-top-control a4-text-control a4-note20-proxy', 'Note sur 20', '/20', function () {
-    var current = findNoteScaleOriginal('/20');
-    if (current && !current.disabled) current.click();
+    clickNoteWithoutChangingBar('/20');
   });
   if (note20) note20.disabled = original20 ? original20.disabled : true;
 
