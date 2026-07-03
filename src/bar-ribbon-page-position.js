@@ -75,8 +75,8 @@ function restoreTextFields(snapshot) {
 
 function clickNoteTotalOnly(label) {
   var current = findNoteScaleOriginal(label);
-  if (!current || current.disabled) return;
-  if (current.classList.contains('active')) return;
+  if (!current || current.disabled) return false;
+  if (current.classList.contains('active')) return false;
 
   var wasVisible = isBarRibbonVisible();
   var fields = getTextFieldSnapshot();
@@ -94,6 +94,21 @@ function clickNoteTotalOnly(label) {
     restoreBarRibbonState(wasVisible);
     restoreTextFields(fields);
   }, 320);
+  return true;
+}
+
+function clickNoteToggle(button) {
+  var currentScale = getCurrentNoteScale();
+  var targetScale = currentScale === '/20' ? '/10' : '/20';
+  if (button) {
+    button.textContent = targetScale;
+    button.title = 'Basculer la note ' + (targetScale === '/20' ? '/10' : '/20');
+    button.setAttribute('aria-label', button.title);
+  }
+  clickNoteTotalOnly(targetScale);
+  setTimeout(syncA4ProxyControls, 40);
+  setTimeout(syncA4ProxyControls, 140);
+  setTimeout(syncA4ProxyControls, 320);
 }
 
 function makeProxy(classes, title, text, action) {
@@ -108,7 +123,7 @@ function makeProxy(classes, title, text, action) {
     button.addEventListener('click', function (event) {
       event.preventDefault();
       event.stopPropagation();
-      if (typeof button._proxyAction === 'function') button._proxyAction();
+      if (typeof button._proxyAction === 'function') button._proxyAction(button);
       setTimeout(syncA4ProxyControls, 80);
       setTimeout(syncA4ProxyControls, 250);
     });
@@ -147,10 +162,10 @@ function syncA4ProxyControls() {
   });
 
   var currentScale = getCurrentNoteScale();
-  var targetScale = currentScale === '/20' ? '/10' : '/20';
-  var originalTarget = findNoteScaleOriginal(targetScale);
-  var noteToggle = makeProxy('a4-top-control a4-text-control a4-note-toggle-proxy', 'Basculer la note ' + targetScale, currentScale, function () {
-    clickNoteTotalOnly(targetScale);
+  var nextScale = currentScale === '/20' ? '/10' : '/20';
+  var originalTarget = findNoteScaleOriginal(nextScale);
+  var noteToggle = makeProxy('a4-top-control a4-text-control a4-note-toggle-proxy', 'Basculer la note ' + nextScale, currentScale, function (button) {
+    clickNoteToggle(button);
   });
   if (noteToggle) noteToggle.disabled = originalTarget ? originalTarget.disabled : true;
 
