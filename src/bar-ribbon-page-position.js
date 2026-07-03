@@ -26,13 +26,16 @@ function findNoteScaleOriginal(label) {
   }) || null;
 }
 
-function getCurrentNoteScale() {
-  if (window.__noteScaleOptimistic && Date.now() < window.__noteScaleOptimisticUntil) return window.__noteScaleOptimistic;
+function getRealNoteScale() {
   var b10 = findNoteScaleOriginal('/10');
   var b20 = findNoteScaleOriginal('/20');
   if (b10 && b10.classList.contains('active')) return '/10';
   if (b20 && b20.classList.contains('active')) return '/20';
   return '/20';
+}
+
+function getCurrentNoteScale() {
+  return window.__noteScaleDesired || getRealNoteScale();
 }
 
 function isBarRibbonVisible() {
@@ -77,7 +80,6 @@ function restoreTextFields(snapshot) {
 function clickNoteTotalOnly(label) {
   var current = findNoteScaleOriginal(label);
   if (!current || current.disabled) return false;
-  if (current.classList.contains('active')) return false;
 
   var wasVisible = isBarRibbonVisible();
   var fields = getTextFieldSnapshot();
@@ -98,31 +100,24 @@ function clickNoteTotalOnly(label) {
   return true;
 }
 
-function getScaleFromToggle(button) {
-  var text = String((button && button.textContent) || '').trim();
-  return text === '/10' ? '/10' : '/20';
-}
-
 function updateToggleButton(button, scale) {
   if (!button) return;
   button.textContent = scale;
   button.title = 'Basculer la note ' + (scale === '/20' ? '/10' : '/20');
   button.setAttribute('aria-label', button.title);
+  button.disabled = false;
 }
 
 function clickNoteToggle(button) {
-  var currentScale = getScaleFromToggle(button);
+  var currentScale = getCurrentNoteScale();
   var targetScale = currentScale === '/20' ? '/10' : '/20';
-  window.__noteScaleOptimistic = targetScale;
-  window.__noteScaleOptimisticUntil = Date.now() + 900;
+  window.__noteScaleDesired = targetScale;
   updateToggleButton(button, targetScale);
   clickNoteTotalOnly(targetScale);
+  setTimeout(syncA4ProxyControls, 40);
   setTimeout(syncA4ProxyControls, 120);
-  setTimeout(syncA4ProxyControls, 320);
-  setTimeout(function () {
-    window.__noteScaleOptimistic = null;
-    syncA4ProxyControls();
-  }, 950);
+  setTimeout(syncA4ProxyControls, 260);
+  setTimeout(syncA4ProxyControls, 520);
 }
 
 function makeProxy(classes, title, text, action) {
@@ -175,13 +170,16 @@ function syncA4ProxyControls() {
     if (b && !b.disabled) b.click();
   });
 
+  var realScale = getRealNoteScale();
+  if (window.__noteScaleDesired && realScale === window.__noteScaleDesired) {
+    window.__noteScaleDesired = null;
+  }
   var currentScale = getCurrentNoteScale();
   var nextScale = currentScale === '/20' ? '/10' : '/20';
-  var originalTarget = findNoteScaleOriginal(nextScale);
   var noteToggle = makeProxy('a4-top-control a4-text-control a4-note-toggle-proxy', 'Basculer la note ' + nextScale, currentScale, function (button) {
     clickNoteToggle(button);
   });
-  if (noteToggle) noteToggle.disabled = originalTarget ? originalTarget.disabled : true;
+  updateToggleButton(noteToggle, currentScale);
 
   var old10 = page.querySelector('.a4-note10-proxy');
   if (old10) old10.remove();
