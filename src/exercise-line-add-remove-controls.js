@@ -68,7 +68,7 @@ function runCountAction(pageIndex, wanted) {
 }
 
 function ensureExerciseLineControlStyle() {
-  var css = '.exercise-line-count-overlay{position:fixed!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:13px!important;z-index:99999!important;pointer-events:auto!important;transform:translateX(-50%)!important;opacity:.22!important;transition:opacity .12s ease!important}.exercise-line-count-overlay:hover{opacity:1!important}.exercise-line-count-overlay button{width:46px!important;min-width:46px!important;height:36px!important;min-height:36px!important;border-radius:7px!important;border:1px solid rgba(100,116,139,.35)!important;background:rgba(255,255,255,.32)!important;color:rgba(15,23,42,.45)!important;font-size:18px!important;font-weight:900!important;line-height:1!important;padding:0!important;margin:0!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;cursor:pointer!important;box-sizing:border-box!important;box-shadow:none!important;-webkit-tap-highlight-color:transparent!important}.exercise-line-count-overlay:hover button{background:#ffffff!important;border-color:#64748b!important;color:#0f172a!important;box-shadow:0 1px 3px rgba(15,23,42,.18)!important}.exercise-line-count-overlay button:hover{background:#e0f2fe!important;border-color:#2563eb!important;color:#1d4ed8!important}.exercise-line-count-overlay button.minus:hover{background:#fee2e2!important;border-color:#dc2626!important;color:#b91c1c!important}.exercise-line-count-overlay button:disabled{opacity:.18!important;cursor:not-allowed!important}@media(max-width:1200px){.exercise-line-count-overlay{gap:11px!important;opacity:.28!important}.exercise-line-count-overlay:hover{opacity:1!important}.exercise-line-count-overlay button{width:46px!important;min-width:46px!important;height:36px!important;min-height:36px!important;font-size:18px!important;border-radius:7px!important}}@media print{.exercise-line-count-overlay{display:none!important}}';
+  var css = '.a4-page{position:relative!important}.exercise-line-count-overlay{position:absolute!important;left:calc(50% - 300px)!important;top:154px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:13px!important;z-index:99999!important;pointer-events:auto!important;transform:translateX(-50%)!important;opacity:.22!important;transition:opacity .12s ease!important}.exercise-line-count-overlay:hover{opacity:1!important}.exercise-line-count-overlay button{width:46px!important;min-width:46px!important;height:36px!important;min-height:36px!important;border-radius:7px!important;border:1px solid rgba(100,116,139,.35)!important;background:rgba(255,255,255,.32)!important;color:rgba(15,23,42,.45)!important;font-size:18px!important;font-weight:900!important;line-height:1!important;padding:0!important;margin:0!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;cursor:pointer!important;box-sizing:border-box!important;box-shadow:none!important;-webkit-tap-highlight-color:transparent!important}.exercise-line-count-overlay:hover button{background:#ffffff!important;border-color:#64748b!important;color:#0f172a!important;box-shadow:0 1px 3px rgba(15,23,42,.18)!important}.exercise-line-count-overlay button:hover{background:#e0f2fe!important;border-color:#2563eb!important;color:#1d4ed8!important}.exercise-line-count-overlay button.minus:hover{background:#fee2e2!important;border-color:#dc2626!important;color:#b91c1c!important}.exercise-line-count-overlay button:disabled{opacity:.18!important;cursor:not-allowed!important}@media(max-width:1200px){.exercise-line-count-overlay{gap:11px!important;opacity:.28!important}.exercise-line-count-overlay:hover{opacity:1!important}.exercise-line-count-overlay button{width:46px!important;min-width:46px!important;height:36px!important;min-height:36px!important;font-size:18px!important;border-radius:7px!important}}@media print{.exercise-line-count-overlay{display:none!important}}';
   var style = document.getElementById('exercise-line-add-remove-style');
   if (!style) {
     style = document.createElement('style');
@@ -102,20 +102,18 @@ function syncExerciseLineControls() {
     var rect = pageNode.getBoundingClientRect();
     if (!rect.width || !rect.height) return;
 
-    var controls = document.querySelector('.exercise-line-count-overlay[data-page-index="' + pageIndex + '"]');
+    var controls = pageNode.querySelector('.exercise-line-count-overlay[data-page-index="' + pageIndex + '"]');
     if (!controls) {
       controls = document.createElement('div');
       controls.className = 'exercise-line-count-overlay';
       controls.setAttribute('data-page-index', String(pageIndex));
       controls.appendChild(makeButton('−', 'minus', pageIndex, '-'));
       controls.appendChild(makeButton('+', 'plus', pageIndex, '+'));
-      document.body.appendChild(controls);
+      pageNode.appendChild(controls);
     }
 
     var count = getVisibleExerciseCount(pageIndex);
     var realCount = getRealExerciseCount(pageIndex);
-    controls.style.left = (rect.left + rect.width / 2 - 300) + 'px';
-    controls.style.top = (rect.top + Math.max(84, rect.height * 0.1 + 44)) + 'px';
 
     var minus = controls.querySelector('.minus');
     var plus = controls.querySelector('.plus');
@@ -125,7 +123,8 @@ function syncExerciseLineControls() {
 
   document.querySelectorAll('.exercise-line-count-overlay').forEach(function (controls) {
     var pageIndex = Number(controls.getAttribute('data-page-index'));
-    if (!document.querySelectorAll('.a4-page')[pageIndex]) controls.remove();
+    var pageNode = document.querySelectorAll('.a4-page')[pageIndex];
+    if (!pageNode || controls.parentElement !== pageNode) controls.remove();
   });
 }
 
@@ -134,5 +133,4 @@ setTimeout(syncExerciseLineControls, 100);
 setTimeout(syncExerciseLineControls, 250);
 setTimeout(syncExerciseLineControls, 700);
 window.addEventListener('resize', syncExerciseLineControls);
-window.addEventListener('scroll', syncExerciseLineControls, true);
 window.syncExerciseLineControls = syncExerciseLineControls;
