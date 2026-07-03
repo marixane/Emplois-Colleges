@@ -1,0 +1,48 @@
+.bar-buttons {
+  opacity: .22 !important;
+  transition: opacity .12s ease !important;
+}
+
+.bar-buttons:hover {
+  opacity: 1 !important;
+}
+
+.bar-buttons button {
+  background: rgba(255, 255, 255, .32) !important;
+  border-color: rgba(100, 116, 139, .35) !important;
+  color: rgba(15, 23, 42, .45) !important;
+  box-shadow: none !important;
+}
+
+.bar-buttons:hover button {
+  background: #ffffff !important;
+  border-color: #64748b !important;
+  color: #0f172a !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, .18) !important;
+}
+
+.bar-buttons button:hover {
+  background: #e0f2fe !important;
+  border-color: #2563eb !important;
+  color: #1d4ed8 !important;
+}
+
+.bar-buttons button:disabled {
+  opacity: .18 !important;
+}
+
+@media (max-width: 1200px) {
+  .bar-buttons {
+    opacity: .28 !important;
+  }
+
+  .bar-buttons:hover {
+    opacity: 1 !important;
+  }
+}
+
+@media print {
+  .bar-buttons {
+    opacity: 1 !important;
+  }
+}
