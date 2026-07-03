@@ -78,6 +78,7 @@ import './fixed-button-positions.js';
 import './pdf-original-size-now.js';
 import './mobile-phone-settings.css';
 import './arabic-no-mirror.css';
+import './arabic-fixed-proxy-buttons.css';
 import './mobile-phone-force.js';
 import './mobile-touch-drag.js';
 import './mobile-exercice-touch-zone.css';
