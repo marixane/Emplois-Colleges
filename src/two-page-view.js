@@ -1,5 +1,4 @@
 const TWO_PAGE_VIEW_KEY = 'exam-two-page-view';
-let lastMultiplePageState = false;
 
 function pageCount() {
   return document.querySelectorAll('.preview-zone .a4-page').length;
@@ -10,19 +9,12 @@ function hasMultiplePages() {
 }
 
 function isTwoPageViewEnabled() {
-  return localStorage.getItem(TWO_PAGE_VIEW_KEY) !== 'false';
+  return localStorage.getItem(TWO_PAGE_VIEW_KEY) === 'true';
 }
 
 function setTwoPageView(enabled) {
   localStorage.setItem(TWO_PAGE_VIEW_KEY, enabled ? 'true' : 'false');
   syncTwoPageView();
-}
-
-function autoEnableWhenSecondPageAppears(multiple) {
-  if (multiple && !lastMultiplePageState) {
-    localStorage.setItem(TWO_PAGE_VIEW_KEY, 'true');
-  }
-  lastMultiplePageState = multiple;
 }
 
 function getSteppedScale(rawScale) {
@@ -57,7 +49,6 @@ function updateSheetZoom(twoPageEnabled) {
 
 function syncTwoPageView() {
   const multiple = hasMultiplePages();
-  autoEnableWhenSecondPageAppears(multiple);
   const enabled = isTwoPageViewEnabled() && multiple;
   document.body.classList.toggle('two-page-view', enabled);
   updateSheetZoom(enabled);
@@ -97,6 +88,7 @@ function initTwoPageView() {
   syncTwoPageView();
 }
 
+localStorage.setItem(TWO_PAGE_VIEW_KEY, 'false');
 initTwoPageView();
 setTimeout(initTwoPageView, 200);
 setTimeout(initTwoPageView, 700);
