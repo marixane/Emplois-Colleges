@@ -1,25 +1,7 @@
-.exam-page.has-bar-ribbon .exam-exercise .exercise-body::before {
-  content: '' !important;
-  position: absolute !important;
-  left: 0 !important;
-  top: 0 !important;
-  bottom: 0 !important;
-  width: 29px !important;
-  background: rgba(15, 23, 42, 0.08) !important;
-  border-right: 1px solid rgba(15, 23, 42, 0.18) !important;
-  z-index: 1 !important;
-  pointer-events: none !important;
-}
-
-.exam-page.is-exporting.has-bar-ribbon .exam-exercise .exercise-body::before {
-  background: rgba(15, 23, 42, 0.10) !important;
-  border-right-color: rgba(15, 23, 42, 0.20) !important;
-}
-
+/* Grading marks keep their original position and drag cursor. */
 .bar-mark {
   left: 2px !important;
   cursor: ns-resize !important;
-  z-index: 90 !important;
 }
 
 .bar-mark::after {
