@@ -121,13 +121,7 @@ export default function App6() {
     setPages((cur) => balance(cur, 20));
   };
   const changeNoteTotal = (targetTotal) => {
-    if (noteTotal === targetTotal) {
-      enterFreeMode();
-      return;
-    }
-    setKind('individual');
-    setTitleTop(IND_TITLE_TOP);
-    setBarRibbon(true);
+    if (noteTotal === targetTotal) return;
     setNoteTotal(targetTotal);
     setPages((cur) => balance(cur, targetTotal));
   };
