@@ -354,7 +354,7 @@ body.cahier-tab-active .exercise-line-count-overlay {
   justify-content: center;
   padding: 0 1px;
   gap: 2px;
-  transform: translateX(-2px);
+  transform: translateX(-4px);
 }
 
 .span-tools button:nth-child(3) {
