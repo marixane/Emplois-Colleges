@@ -171,17 +171,34 @@ body.cahier-tab-active .exercise-line-count-overlay {
   cursor: grabbing;
 }
 
+.timetable-cell-content.colored-cell {
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  align-items: stretch;
+}
+
 .timetable-cell-content textarea {
   min-height: 16px;
-  padding: 16px 2px 0;
+  padding: 0 2px;
   font-size: 11px;
   font-weight: 900;
   line-height: 1;
   text-align: center;
 }
 
+.timetable-cell-content.colored-cell textarea {
+  grid-row: 2;
+  align-self: center;
+  min-height: 100%;
+  padding: 1px 2px 0;
+}
+
 .timetable-cell-content textarea:not(:placeholder-shown) {
-  padding: 16px 2px 0;
+  padding: 0 2px;
+}
+
+.timetable-cell-content.colored-cell textarea:not(:placeholder-shown) {
+  padding: 1px 2px 0;
 }
 
 .timetable-cell-content textarea::placeholder {
@@ -214,6 +231,13 @@ body.cahier-tab-active .exercise-line-count-overlay {
   font-weight: bold;
 }
 
+.timetable-cell-content.colored-cell .room-control {
+  position: static;
+  grid-row: 3;
+  justify-self: center;
+  align-self: center;
+}
+
 .room-control input {
   width: 18px;
   height: 10px;
@@ -242,6 +266,13 @@ body.cahier-tab-active .exercise-line-count-overlay {
   display: flex;
   justify-content: space-between;
   pointer-events: none;
+}
+
+.timetable-cell-content.colored-cell .span-tools {
+  position: static;
+  grid-row: 1;
+  align-self: center;
+  padding: 0 2px;
 }
 
 .span-tools button:nth-child(3) {
