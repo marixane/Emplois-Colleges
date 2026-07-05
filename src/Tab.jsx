@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import MoroccoHolidaysPage from './MoroccoHolidaysPage';
 
 const DAYS = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
 const HOURS = ['08:00 - 09:00', '09:00 - 10:00', '10:00 - 11:00', '11:00 - 12:00', '12:00 - 13:00', '13:00 - 14:00', '14:00 - 15:00', '15:00 - 16:00', '16:00 - 17:00', '17:00 - 18:00'];
@@ -256,6 +257,7 @@ export default function Tab() {
 
   return <main className="cahier-shell clean-cahier-shell">
     <section className="cahier-preview-zone">
+      <MoroccoHolidaysPage />
       <div className="a4-page cahier-page">
         <header className="cahier-header">
           <input value={school} onChange={(e) => setSchool(e.target.value)} onKeyDown={validateOnEnter} />
