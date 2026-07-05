@@ -11,6 +11,13 @@ const DOT_TEXT = Array.from({ length: 4 }, () => '.'.repeat(74)).join('\n');
 const HOLIDAY_RANGES = [
   { start: '05/09', end: '06/09', text: 'Vacance : Aïd Al Mawlid Annabaoui' }
 ];
+const SCHOOL_PROGRESS_FLAGS = [
+  { date: '19/10', label: 'Vacances 1' },
+  { date: '07/12', label: 'Vacances 2' },
+  { date: '25/01', label: 'Mi-année' },
+  { date: '15/03', label: 'Vacances 3' },
+  { date: '03/05', label: 'Vacances 4' }
+];
 
 const createCell = () => ({ text: '', room: 1, span: 1, hidden: false });
 const clampRoom = (value) => Math.min(Math.max(Number(value) || 1, 1), 80);
@@ -32,7 +39,13 @@ const levelGroupsStyle = { display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)
 const levelGroupTitleStyle = { marginBottom: '8px', color: '#111827', fontSize: '12px', fontWeight: 900, textAlign: 'center', textTransform: 'uppercase', letterSpacing: '0.3px' };
 const levelGroupClassesStyle = { display: 'flex', flexDirection: 'column', alignItems: 'stretch', justifyContent: 'flex-start', gap: '7px', minHeight: '130px', color: 'rgba(17, 17, 17, 0.45)', fontSize: '10px', fontWeight: 800, lineHeight: 1.1, textAlign: 'center' };
 const levelChipStyle = { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '100%', minHeight: '28px', padding: '7px 9px', borderRadius: '9px', border: '1px solid rgba(17, 17, 17, 0.22)', color: '#111827', fontSize: '12px', fontWeight: 900, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', cursor: 'grab', boxShadow: '0 1px 3px rgba(17, 17, 17, 0.12)' };
-const groupHomeworkHeaderStyle = { position: 'absolute', top: '10px', left: '18px', right: '18px', height: '30px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '10px', background: 'var(--group-color)', color: '#111827', fontSize: '18px', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.4px', boxShadow: '0 2px 6px rgba(17, 17, 17, 0.12)' };
+const groupHomeworkHeaderStyle = { position: 'absolute', top: '10px', left: '18px', right: '18px', height: '42px', display: 'grid', gridTemplateColumns: '230px 1fr', alignItems: 'center', gap: '18px', borderRadius: '12px', background: 'var(--group-color)', color: '#111827', padding: '0 18px', boxShadow: '0 2px 6px rgba(17, 17, 17, 0.12)' };
+const groupHomeworkTitleStyle = { fontSize: '20px', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.4px', textAlign: 'left', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' };
+const progressWrapStyle = { display: 'grid', gridTemplateColumns: '1fr 46px', alignItems: 'center', gap: '10px' };
+const progressBarStyle = { position: 'relative', height: '12px', borderRadius: '999px', background: 'rgba(255, 255, 255, 0.85)', border: '1px solid rgba(17, 24, 39, 0.12)', boxShadow: 'inset 0 1px 3px rgba(17, 24, 39, 0.10)' };
+const progressFillStyle = { position: 'absolute', top: 0, left: 0, bottom: 0, borderRadius: '999px', background: 'linear-gradient(90deg, #22c55e, #16a34a)' };
+const progressFlagStyle = { position: 'absolute', top: '-15px', transform: 'translateX(-50%)', fontSize: '13px', lineHeight: 1, filter: 'drop-shadow(0 1px 1px rgba(17, 24, 39, 0.25))' };
+const progressPercentStyle = { fontSize: '12px', fontWeight: 900, textAlign: 'right', color: '#111827' };
 
 const getCellColor = (text) => {
   const normalized = String(text ?? '').toLowerCase().replace(/[\s-]/g, '').trim();
@@ -52,6 +65,23 @@ const getSchoolStartYear = () => {
 const getSchoolYear = () => {
   const startYear = getSchoolStartYear();
   return `Année scolaire : ${startYear} / ${startYear + 1}`;
+};
+const getSchoolProgressBounds = () => {
+  const startYear = getSchoolStartYear();
+  return { start: new Date(startYear, 8, 1), end: new Date(startYear + 1, 5, 30) };
+};
+const getSchoolProgressPercent = () => {
+  const { start, end } = getSchoolProgressBounds();
+  const today = new Date();
+  const percent = ((today - start) / (end - start)) * 100;
+  return Math.min(100, Math.max(0, Math.round(percent)));
+};
+const getFlagPercent = (dateText) => {
+  const [day, month] = dateText.split('/').map(Number);
+  const startYear = getSchoolStartYear();
+  const flagDate = new Date(month >= 9 ? startYear : startYear + 1, month - 1, day);
+  const { start, end } = getSchoolProgressBounds();
+  return Math.min(100, Math.max(0, ((flagDate - start) / (end - start)) * 100));
 };
 const createRows = () => DAYS.map((day) => ({ day, cells: HOURS.reduce((acc, hour) => ({ ...acc, [hour]: createCell() }), {}) }));
 const getHourStart = (hour) => String(hour ?? '').split('-')[0].trim();
@@ -91,6 +121,7 @@ export default function Tab() {
   const [manualGroups, setManualGroups] = useState(null);
   const [draggedClass, setDraggedClass] = useState(null);
   const schoolYear = getSchoolYear();
+  const schoolProgress = getSchoolProgressPercent();
 
   const validateOnEnter = (event) => {
     if (event.key === 'Enter') {
@@ -322,8 +353,17 @@ export default function Tab() {
         </div>
         <footer className="cahier-footer"><span>Signature :</span><span>Observations :</span></footer>
       </div>
-      {groupedHomeworkPages.map((group, groupIndex) => group.pages.map((pageEntries, pageIndex) => <div className="a4-page cahier-page homework-page" key={`homework-page-${groupIndex}-${pageIndex}`} style={{ '--group-color': group.color, position: 'relative', paddingTop: '50px' }}>
-        <div style={groupHomeworkHeaderStyle}>{group.title} - Mois 09</div>
+      {groupedHomeworkPages.map((group, groupIndex) => group.pages.map((pageEntries, pageIndex) => <div className="a4-page cahier-page homework-page" key={`homework-page-${groupIndex}-${pageIndex}`} style={{ '--group-color': group.color, position: 'relative', paddingTop: '60px' }}>
+        <div style={groupHomeworkHeaderStyle}>
+          <div style={groupHomeworkTitleStyle}>{group.title}</div>
+          <div style={progressWrapStyle}>
+            <div style={progressBarStyle}>
+              <div style={{ ...progressFillStyle, width: `${schoolProgress}%` }} />
+              {SCHOOL_PROGRESS_FLAGS.map((flag) => <span key={flag.date} style={{ ...progressFlagStyle, left: `${getFlagPercent(flag.date)}%` }} title={flag.label}>⚑</span>)}
+            </div>
+            <div style={progressPercentStyle}>{schoolProgress}%</div>
+          </div>
+        </div>
         {pageEntries.map((entry) => <section className="homework-entry" key={`${group.title}-${entry.date}`} style={{ '--homework-color': entry.color }}>
           <div className="homework-date" contentEditable suppressContentEditableWarning onKeyDown={validateOnEnter}>{entry.date}</div>
           <div className="homework-content"><div className="homework-subject" contentEditable={entry.sessions.length === 0} suppressContentEditableWarning onKeyDown={validateOnEnter} style={entry.sessions.length ? subjectTextStyle : undefined}>{entry.sessions.map((session) => <div key={`${group.title}-${entry.date}-${session.hour}-${session.className}`} style={sessionLineStyle}><span style={sessionHourStyle}>{session.hour}</span><span style={sessionClassStyle}>{session.className}</span></div>)}</div><div className="homework-text" contentEditable suppressContentEditableWarning onKeyDown={validateOnEnter} style={entry.isHoliday ? holidayTextStyle : dotTextStyle}>{entry.text}</div></div>
