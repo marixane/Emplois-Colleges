@@ -374,8 +374,8 @@ export default function Tab() {
         <table className="activity-table">
           <thead>
             <tr className="activity-top-row">
-              <th colSpan="3"><textarea defaultValue="Séquence:" /></th>
-              <th colSpan="3"><textarea defaultValue="Compétences:" /></th>
+              <th><textarea defaultValue="Séquence:" /></th>
+              <th colSpan="5"><textarea defaultValue="Compétences:" /></th>
             </tr>
             <tr className="activity-label-row">
               <th><textarea defaultValue="Date" /></th>
