@@ -86,5 +86,6 @@ import './mobile-touch-drag.js';
 import './mobile-exercice-touch-zone.css';
 import './line-grid-mode.js';
 import './cahier-texte.css';
+import './cahier-left-margin-100.css';
 
 createRoot(document.getElementById('root')).render(<React.StrictMode><App /></React.StrictMode>);
