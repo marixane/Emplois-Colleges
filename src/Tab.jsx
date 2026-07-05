@@ -302,6 +302,13 @@ export default function Tab() {
     wordBreak: 'break-word'
   };
 
+  const activityRemarksStyle = {
+    ...activityLabelStyle,
+    fontSize: '14px',
+    lineHeight: 1.05,
+    overflowWrap: 'anywhere'
+  };
+
   return <main className="cahier-shell clean-cahier-shell">
     <section className="cahier-preview-zone">
       <div className="a4-page cahier-page">
@@ -414,7 +421,7 @@ export default function Tab() {
               <th><div contentEditable suppressContentEditableWarning onKeyDown={validateOnEnter} style={activityLabelStyle}>Heure</div></th>
               <th><div contentEditable suppressContentEditableWarning onKeyDown={validateOnEnter} style={activityLabelStyle}>Classe</div></th>
               <th colSpan="2"><textarea aria-label="Espace libre" /></th>
-              <th><div contentEditable suppressContentEditableWarning onKeyDown={validateOnEnter} style={activityLabelStyle}>Remarques</div></th>
+              <th><div contentEditable suppressContentEditableWarning onKeyDown={validateOnEnter} style={activityRemarksStyle}>Remarques</div></th>
             </tr>
           </thead>
           <tbody>
