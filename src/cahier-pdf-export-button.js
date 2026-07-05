@@ -27,17 +27,44 @@ const getCurrentCssText = () => Array.from(document.styleSheets)
 
 const wrapCssForPdf = (css) => `${'<' + 'style'}>${css}${'<' + '/style'}>`;
 
-const cloneA4PagesHtml = () => {
-  const zone = document.querySelector('.cahier-preview-zone');
-  if (!zone) return '';
-  const clone = zone.cloneNode(true);
-  clone.querySelectorAll(`#${PDF_BUTTON_ID}, script, style, link`).forEach((node) => node.remove());
-  clone.querySelectorAll('textarea').forEach((textarea) => {
+const isVisiblePage = (page) => {
+  const rect = page.getBoundingClientRect();
+  const style = window.getComputedStyle(page);
+  return rect.width > 50 && rect.height > 50 && style.display !== 'none' && style.visibility !== 'hidden';
+};
+
+const prepareCloneInputs = (root) => {
+  root.querySelectorAll(`#${PDF_BUTTON_ID}, script, style, link`).forEach((node) => node.remove());
+  root.querySelectorAll('textarea').forEach((textarea) => {
     textarea.textContent = textarea.value;
     textarea.setAttribute('value', textarea.value);
   });
-  clone.querySelectorAll('input').forEach((input) => input.setAttribute('value', input.value));
-  return `${wrapCssForPdf(getCurrentCssText())}${clone.innerHTML}`;
+  root.querySelectorAll('input').forEach((input) => input.setAttribute('value', input.value));
+};
+
+const cloneA4PagesHtml = () => {
+  const zone = document.querySelector('.cahier-preview-zone');
+  if (!zone) return '';
+
+  const pages = Array.from(zone.querySelectorAll('.a4-page, .cahier-page'))
+    .filter(isVisiblePage);
+
+  const exportZone = document.createElement('div');
+  exportZone.className = 'cahier-preview-zone';
+
+  if (pages.length) {
+    pages.forEach((page) => {
+      const clone = page.cloneNode(true);
+      prepareCloneInputs(clone);
+      exportZone.append(clone);
+    });
+  } else {
+    const clone = zone.cloneNode(true);
+    prepareCloneInputs(clone);
+    exportZone.innerHTML = clone.innerHTML;
+  }
+
+  return `${wrapCssForPdf(getCurrentCssText())}${exportZone.outerHTML}`;
 };
 
 const downloadBlob = (blob) => {
