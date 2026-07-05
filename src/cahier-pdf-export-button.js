@@ -1,4 +1,4 @@
-import { toJpeg, toPng } from 'html-to-image';
+import { toJpeg, toPng } from './html-to-image-local.js';
 import { jsPDF } from 'jspdf';
 
 const PDF_BUTTON_ID = 'cahier-pdf-export-button';
