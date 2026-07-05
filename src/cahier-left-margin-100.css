@@ -1,0 +1,33 @@
+body.cahier-tab-active .cahier-page {
+  padding-left: 100px !important;
+}
+
+body.cahier-tab-active .homework-page {
+  padding-left: 100px !important;
+}
+
+body.cahier-tab-active .holidays-page {
+  padding-left: 100px !important;
+}
+
+body.cahier-tab-active .homework-page > div:first-child {
+  left: 100px !important;
+}
+
+@media print {
+  body.cahier-tab-active .cahier-page {
+    padding-left: 100px !important;
+  }
+
+  body.cahier-tab-active .homework-page {
+    padding-left: 100px !important;
+  }
+
+  body.cahier-tab-active .holidays-page {
+    padding-left: 100px !important;
+  }
+
+  body.cahier-tab-active .homework-page > div:first-child {
+    left: 100px !important;
+  }
+}
