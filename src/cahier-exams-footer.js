@@ -54,23 +54,24 @@ const getTimetablePage = () => Array.from(document.querySelectorAll('.cahier-pag
   .find((page) => page.querySelector('.timetable-table'));
 
 const applyCahierExamsFooter = () => {
-  if (!document.body.classList.contains('cahier-tab-active')) return;
+  if (!document.body.classList.contains('cahier-tab-active')) return false;
   const page = getTimetablePage();
-  if (!page) return;
+  if (!page) return false;
 
   page.querySelectorAll('.cahier-footer').forEach((footer) => footer.remove());
 
   if (!page.querySelector('.cahier-exams-footer')) page.append(buildExamTable());
+  return true;
 };
 
-let examsFooterRaf = 0;
-const scheduleCahierExamsFooter = () => {
-  if (examsFooterRaf) return;
-  examsFooterRaf = window.requestAnimationFrame(() => {
-    examsFooterRaf = 0;
-    applyCahierExamsFooter();
-  });
-};
+let examsFooterRetryCount = 0;
+const scheduleCahierExamsFooter = () => window.requestAnimationFrame(() => {
+  const done = applyCahierExamsFooter();
+  if (!done && examsFooterRetryCount < 18) {
+    examsFooterRetryCount += 1;
+    window.setTimeout(scheduleCahierExamsFooter, 250);
+  }
+});
 
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', scheduleCahierExamsFooter, { once: true });
@@ -78,9 +79,4 @@ if (document.readyState === 'loading') {
   scheduleCahierExamsFooter();
 }
 
-new MutationObserver(scheduleCahierExamsFooter).observe(document.body, {
-  childList: true,
-  subtree: true,
-  attributes: true,
-  attributeFilter: ['class']
-});
+document.addEventListener('click', () => window.setTimeout(scheduleCahierExamsFooter, 120), { passive: true });
