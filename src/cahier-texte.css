@@ -62,7 +62,7 @@ body.cahier-tab-active .exercise-line-count-overlay {
   flex: 0 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 36px;
   background: transparent;
 }
 
