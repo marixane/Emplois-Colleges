@@ -1,0 +1,9 @@
+.cahier-tab-active .homework-page {
+  padding-top: 110px !important;
+}
+
+@media print {
+  .cahier-tab-active .homework-page {
+    padding-top: 110px !important;
+  }
+}
