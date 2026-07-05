@@ -63,6 +63,10 @@ const getClassLevel = (className) => {
   if (normalized.startsWith('2BAC') || normalized.startsWith('2EME') || normalized.startsWith('2ÈME')) return '2ème Bac';
   return 'Autres';
 };
+const getGroupIndex = (className) => {
+  const level = getClassLevel(className);
+  return level === 'Tronc Commun' ? 0 : level === '1ères Bac' ? 1 : level === '2ème Bac' ? 2 : 3;
+};
 
 export default function Tab() {
   const [school, setSchool] = useState('Établissement :');
@@ -92,12 +96,10 @@ export default function Tab() {
       delete nextCells[oldHour];
       return { ...row, cells: nextCells };
     }));
-    setManualGroups(null);
   };
   const updateDay = (index, value) => setRows((current) => current.map((row, i) => i === index ? { ...row, day: value } : row));
   const updateCellText = (dayIndex, hour, value) => {
     setRows((current) => current.map((row, i) => i === dayIndex ? { ...row, cells: { ...row.cells, [hour]: { ...normalizeCell(row.cells[hour]), text: value } } } : row));
-    setManualGroups(null);
   };
   const updateRoom = (dayIndex, hour, value) => setRows((current) => current.map((row, i) => i === dayIndex ? { ...row, cells: { ...row.cells, [hour]: { ...normalizeCell(row.cells[hour]), room: clampRoom(value) } } } : row));
 
@@ -107,19 +109,27 @@ export default function Tab() {
     return list;
   }, []));
 
-  const autoGroups = GROUP_TITLES.map((title) => ({ title, classes: [] }));
-  rows.forEach((row) => {
+  const tableClasses = rows.reduce((classes, row) => {
     hours.forEach((hour) => {
       const cell = normalizeCell(row.cells[hour]);
       const className = cell.text.trim();
-      if (!cell.hidden && className) {
-        const level = getClassLevel(className);
-        const targetIndex = level === 'Tronc Commun' ? 0 : level === '1ères Bac' ? 1 : level === '2ème Bac' ? 2 : 3;
-        if (!autoGroups[targetIndex].classes.includes(className)) autoGroups[targetIndex].classes.push(className);
-      }
+      if (!cell.hidden && className && !classes.includes(className)) classes.push(className);
     });
+    return classes;
+  }, []);
+  const autoGroups = GROUP_TITLES.map((title) => ({ title, classes: [] }));
+  tableClasses.forEach((className) => {
+    const targetIndex = getGroupIndex(className);
+    autoGroups[targetIndex].classes.push(className);
   });
-  const classGroups = manualGroups ?? autoGroups;
+  const reconciledManualGroups = manualGroups ? GROUP_TITLES.map((title, index) => ({ title, classes: (manualGroups[index]?.classes ?? []).filter((className) => tableClasses.includes(className)) })) : null;
+  if (reconciledManualGroups) {
+    tableClasses.forEach((className) => {
+      const alreadyGrouped = reconciledManualGroups.some((group) => group.classes.includes(className));
+      if (!alreadyGrouped) reconciledManualGroups[getGroupIndex(className)].classes.push(className);
+    });
+  }
+  const classGroups = reconciledManualGroups ?? autoGroups;
 
   const moveClassToGroup = (className, targetIndex) => {
     setManualGroups((current) => {
@@ -169,7 +179,6 @@ export default function Tab() {
       for (let index = hourIndex + 1; index < hourIndex + pasted.span; index += 1) nextCells[hours[index]] = { ...createCell(), hidden: true };
       return { ...row, cells: nextCells };
     }));
-    setManualGroups(null);
     setCopiedCell(cloneCell(cellToPaste));
     setSelectedCell(`${dayIndex}-${hourIndex}`);
   };
@@ -236,7 +245,6 @@ export default function Tab() {
       for (let index = hourIndex + 1; index < hourIndex + cell.span && index < hours.length; index += 1) nextCells[hours[index]] = createCell();
       return { ...row, cells: nextCells };
     }));
-    setManualGroups(null);
     setCopiedCell(null);
     setSelectedCell(null);
   };
