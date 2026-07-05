@@ -1,0 +1,75 @@
+body.cahier-tab-active .cahier-exams-footer {
+  margin-top: 12px !important;
+  padding: 8px 10px !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(17, 24, 39, 0.20) !important;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(248, 250, 252, 0.86)) !important;
+  box-shadow: 0 2px 8px rgba(17, 24, 39, 0.10) !important;
+  page-break-inside: avoid !important;
+}
+
+body.cahier-tab-active .cahier-exams-title {
+  margin-bottom: 6px !important;
+  color: #111827 !important;
+  font-family: Arial, sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 900 !important;
+  text-align: center !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.3px !important;
+}
+
+body.cahier-tab-active .cahier-exams-table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  table-layout: fixed !important;
+  overflow: hidden !important;
+  border-radius: 9px !important;
+  font-family: Arial, sans-serif !important;
+}
+
+body.cahier-tab-active .cahier-exams-table th,
+body.cahier-tab-active .cahier-exams-table td {
+  border: 1px solid rgba(17, 24, 39, 0.18) !important;
+  padding: 5px 7px !important;
+  color: #111827 !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  line-height: 1.15 !important;
+  vertical-align: middle !important;
+  min-height: 20px !important;
+  outline: none !important;
+}
+
+body.cahier-tab-active .cahier-exams-table th {
+  background: #e0f2fe !important;
+  font-size: 11px !important;
+  font-weight: 900 !important;
+  text-align: center !important;
+}
+
+body.cahier-tab-active .cahier-exams-table td {
+  background: rgba(255, 255, 255, 0.82) !important;
+}
+
+body.cahier-tab-active .cahier-exams-table td:first-child {
+  width: 16% !important;
+  text-align: center !important;
+  font-weight: 900 !important;
+  background: #fef3c7 !important;
+}
+
+body.cahier-tab-active .cahier-exams-table td:nth-child(2) {
+  width: 38% !important;
+}
+
+body.cahier-tab-active .cahier-exams-table td:nth-child(3),
+body.cahier-tab-active .cahier-exams-table td:nth-child(4) {
+  color: rgba(17, 24, 39, 0.55) !important;
+}
+
+@media print {
+  body.cahier-tab-active .cahier-exams-footer {
+    box-shadow: none !important;
+  }
+}
