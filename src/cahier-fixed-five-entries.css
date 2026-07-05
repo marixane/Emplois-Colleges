@@ -49,6 +49,24 @@ body.cahier-tab-active .homework-page .homework-text {
   justify-content: center !important;
 }
 
+body.cahier-tab-active .homework-entry:not(.cahier-exam-entry):not(.cahier-extra-holiday-entry) .homework-text {
+  height: 96px !important;
+  min-height: 96px !important;
+  max-height: 96px !important;
+  padding-top: 15px !important;
+  padding-bottom: 0 !important;
+  line-height: 1.55 !important;
+  overflow: hidden !important;
+  pointer-events: none !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  cursor: default !important;
+}
+
+body.cahier-tab-active .homework-entry:not(.cahier-exam-entry):not(.cahier-extra-holiday-entry) .homework-text[contenteditable="true"] {
+  caret-color: transparent !important;
+}
+
 body.cahier-tab-active .homework-page .homework-text[style*="pre-wrap"] {
   align-items: flex-start !important;
   justify-content: flex-start !important;
