@@ -181,10 +181,10 @@ const makeClassesCard = (classes) => {
 };
 
 const ensureCoverInfoPanel = () => {
-  if (isEditingCoverField) return;
-  if (!document.body.classList.contains('cahier-tab-active')) return;
+  if (isEditingCoverField) return true;
+  if (!document.body.classList.contains('cahier-tab-active')) return false;
   const cover = document.getElementById('cahier-cover-page');
-  if (!cover) return;
+  if (!cover) return false;
 
   removeCoverSubtitleText(cover);
 
@@ -203,9 +203,17 @@ const ensureCoverInfoPanel = () => {
     makeInfoCard({ id: 'cahier-cover-subject-card', top: '802px', label: 'Matière :', field: 'subject', value: getCoverFieldValue('subject', '') }),
     makeClassesCard(classes)
   );
+  return true;
 };
 
-const scheduleCoverInfoPanel = () => window.requestAnimationFrame(ensureCoverInfoPanel);
+let coverInfoRetryCount = 0;
+const scheduleCoverInfoPanel = () => window.requestAnimationFrame(() => {
+  const done = ensureCoverInfoPanel();
+  if (!done && coverInfoRetryCount < 18) {
+    coverInfoRetryCount += 1;
+    window.setTimeout(scheduleCoverInfoPanel, 250);
+  }
+});
 
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', scheduleCoverInfoPanel, { once: true });
@@ -213,10 +221,6 @@ if (document.readyState === 'loading') {
   scheduleCoverInfoPanel();
 }
 
-new MutationObserver(scheduleCoverInfoPanel).observe(document.body, {
-  childList: true,
-  subtree: true,
-  attributes: true,
-  characterData: true,
-  attributeFilter: ['class', 'style', 'value']
-});
+document.addEventListener('input', (event) => {
+  if (event.target?.closest?.('.timetable-table')) window.setTimeout(scheduleCoverInfoPanel, 120);
+}, { passive: true });
