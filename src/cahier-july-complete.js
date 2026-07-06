@@ -2,6 +2,18 @@ const JULY_DAYS = ['DIMANCHE', 'LUNDI', 'MARDI', 'MERCREDI', 'JEUDI', 'VENDREDI'
 const JULY_DOTS = Array.from({ length: 4 }, () => '.'.repeat(74)).join('\n');
 const JULY_COLORS = ['#38bdf8', '#34d399', '#fbbf24', '#f472b6', '#a78bfa'];
 
+const getJulyDate = (text) => {
+  const match = String(text || '').match(/(\d{2})\/(\d{2})/);
+  if (!match) return null;
+  return { day: Number(match[1]), month: Number(match[2]) };
+};
+
+const getJulyPageTitle = (page) => String(
+  page.querySelector('.homework-page > div:first-child > div:first-child')?.textContent ||
+  page.firstElementChild?.firstElementChild?.textContent ||
+  ''
+).trim();
+
 const getJulyGroups = () => {
   const table = document.querySelector('.timetable-table');
   const wrap = Array.from(table?.parentElement?.children || []).find((node) => String(node.getAttribute('style') || '').includes('grid-template-columns: repeat(5'));
@@ -12,10 +24,18 @@ const getJulyGroups = () => {
   })).filter((group) => group.title && group.classes.length);
 };
 
-const makeJulyEntry = ({ date, subject, text, type }) => {
+const removeWrongNativeJulyEntries = () => {
+  document.querySelectorAll('.homework-page:not([data-cahier-july-complete="true"]) .homework-entry:not(.cahier-exam-entry):not(.cahier-extra-holiday-entry)').forEach((entry) => {
+    const date = getJulyDate(entry.querySelector('.homework-date')?.textContent || '');
+    if (date?.month === 7 && date.day >= 4) entry.remove();
+  });
+};
+
+const makeJulyEntry = ({ date, subject, text }) => {
   const entry = document.createElement('section');
-  entry.className = `homework-entry ${type === 'exam' ? 'cahier-exam-entry' : ''} ${type === 'holiday' ? 'cahier-extra-holiday-entry' : ''}`;
-  entry.style.setProperty('--homework-color', type === 'holiday' ? '#f97316' : type === 'exam' ? '#38bdf8' : '#2f80ed');
+  entry.className = 'homework-entry';
+  entry.dataset.cahierJulyEntry = 'true';
+  entry.style.setProperty('--homework-color', '#2f80ed');
 
   const dateNode = document.createElement('div');
   dateNode.className = 'homework-date';
@@ -31,19 +51,11 @@ const makeJulyEntry = ({ date, subject, text, type }) => {
   const textNode = document.createElement('div');
   textNode.className = 'homework-text';
   textNode.textContent = text;
-  if (type) {
-    textNode.style.color = type === 'holiday' ? '#9a3412' : '#1e3a8a';
-    textNode.style.fontSize = '20px';
-    textNode.style.fontWeight = '900';
-    textNode.style.textAlign = 'center';
-    textNode.style.justifyContent = 'center';
-  } else {
-    textNode.style.color = 'rgba(63, 64, 80, 0.28)';
-    textNode.style.fontSize = '22px';
-    textNode.style.fontWeight = '900';
-    textNode.style.lineHeight = '1.35';
-    textNode.style.whiteSpace = 'pre-wrap';
-  }
+  textNode.style.color = 'rgba(63, 64, 80, 0.28)';
+  textNode.style.fontSize = '22px';
+  textNode.style.fontWeight = '900';
+  textNode.style.lineHeight = '1.35';
+  textNode.style.whiteSpace = 'pre-wrap';
 
   content.append(subjectNode, textNode);
   entry.append(dateNode, content);
@@ -52,17 +64,18 @@ const makeJulyEntry = ({ date, subject, text, type }) => {
 
 const getJulyEntries = (group) => {
   const entries = [];
-
   for (let day = 4; day <= 10; day += 1) {
     const date = new Date(2027, 6, day);
     if (date.getDay() === 0) continue;
     const monthDate = `${String(day).padStart(2, '0')}/07`;
-    entries.push({ date: `${JULY_DAYS[date.getDay()]} ${monthDate}`, subject: group.classes.join(' / '), text: JULY_DOTS, type: '' });
+    entries.push({ date: `${JULY_DAYS[date.getDay()]} ${monthDate}`, subject: group.classes.join(' / '), text: JULY_DOTS });
   }
   return entries;
 };
 
-const makeJulyPage = (group, entries) => {
+const countEntries = (page) => page.querySelectorAll('.homework-entry').length;
+
+const makeJulyPage = (group) => {
   const page = document.createElement('div');
   page.className = 'a4-page cahier-page homework-page cahier-visible-group-page';
   page.dataset.cahierJulyComplete = 'true';
@@ -98,19 +111,35 @@ const makeJulyPage = (group, entries) => {
 
   header.append(title, label);
   page.append(header);
-  entries.forEach((entry) => page.append(makeJulyEntry(entry)));
   return page;
+};
+
+const findTargetJulyPage = (group) => {
+  const pages = Array.from(document.querySelectorAll('.homework-page:not([data-cahier-july-complete="true"])'))
+    .filter((page) => getJulyPageTitle(page) === group.title);
+  return pages.reverse().find((page) => String(page.textContent || '').includes('Rattrapage : 2ème Bac')) || pages[0] || null;
 };
 
 const addJulyComplete = () => {
   const shell = document.querySelector('.cahier-preview-zone');
   if (!shell) return;
+
+  document.querySelectorAll('[data-cahier-july-entry="true"]').forEach((entry) => entry.remove());
   document.querySelectorAll('[data-cahier-july-complete="true"]').forEach((page) => page.remove());
+  removeWrongNativeJulyEntries();
+
   getJulyGroups().forEach((group) => {
-    const entries = getJulyEntries(group);
-    for (let index = 0; index < entries.length; index += 5) {
-      shell.append(makeJulyPage(group, entries.slice(index, index + 5)));
-    }
+    let page = findTargetJulyPage(group);
+    if (!page) return;
+
+    getJulyEntries(group).forEach((entryData) => {
+      if (countEntries(page) >= 5) {
+        const nextPage = makeJulyPage(group);
+        page.after(nextPage);
+        page = nextPage;
+      }
+      page.append(makeJulyEntry(entryData));
+    });
   });
 };
 
