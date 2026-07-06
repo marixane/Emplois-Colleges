@@ -93,7 +93,10 @@ import './cahier-hide-extra-school-year.css';
 import './cahier-group-box-polish.css';
 import './cahier-fixed-five-entries.css';
 
-// RESET STABILITÉ : aucun script DOM cahier pendant la saisie.
+// Bouton PDF stable : permanent, devant tout, sans observer lourd.
+import './cahier-pdf-button-stable.js';
+
+// RESET STABILITÉ : autres scripts DOM cahier désactivés pendant la saisie.
 // import './cahier-cover-zellige-fix.js';
 // import './cahier-window-scroll-fix.css';
 // import './cahier-force-scroll.js';
