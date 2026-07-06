@@ -258,7 +258,7 @@ export default function Tab() {
     }).filter(Boolean);
 
     return { title: GROUP_TITLES[groupIndex], color: GROUP_COLORS[groupIndex], classes: group.classes, pages: chunkEntries(entries, 5) };
-  }).filter((group) => group.pages.length > 0);
+  }).filter((group) => group.classes.length > 0 && group.pages.length > 0);
 
   const canExtendLeft = (row, hourIndex) => hourIndex > 0 && Boolean(normalizeCell(row.cells[hours[hourIndex]]).text.trim()) && !normalizeCell(row.cells[hours[hourIndex - 1]]).hidden && !normalizeCell(row.cells[hours[hourIndex - 1]]).text.trim();
   const canExtendRight = (row, hourIndex) => {
