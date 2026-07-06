@@ -5,20 +5,39 @@ const wait = (ms) => new Promise((resolve) => window.setTimeout(resolve, ms));
 const PDF_EXPORT_CSS = `
   @page { size: A4 portrait; margin: 0; }
   * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-  html, body, #root, .app-shell, .cahier-shell, .clean-cahier-shell, .cahier-preview-zone {
+  html, body {
+    width: 210mm !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: white !important;
+    overflow: visible !important;
+  }
+  #root, .app-shell, .cahier-shell, .clean-cahier-shell, .cahier-preview-zone {
+    width: 210mm !important;
     height: auto !important;
     min-height: 0 !important;
     max-height: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
     overflow: visible !important;
     background: white !important;
   }
   .cahier-preview-zone {
     display: block !important;
-    padding: 0 !important;
   }
   .a4-page, .cahier-page {
     display: block !important;
     position: relative !important;
+    width: 210mm !important;
+    min-width: 210mm !important;
+    max-width: 210mm !important;
+    height: 297mm !important;
+    min-height: 297mm !important;
+    max-height: 297mm !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    transform: none !important;
+    zoom: 1 !important;
     overflow: hidden !important;
     break-after: page !important;
     page-break-after: always !important;
