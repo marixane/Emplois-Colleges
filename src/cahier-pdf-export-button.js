@@ -7,6 +7,32 @@ const A4_HEIGHT_PX = 1123;
 const A4_WIDTH_CSS = '210mm';
 const A4_HEIGHT_CSS = '297mm';
 
+const forcePdfButtonVisibleStyle = (button) => {
+  button.hidden = false;
+  button.removeAttribute('hidden');
+  button.style.setProperty('position', 'fixed', 'important');
+  button.style.setProperty('right', '22px', 'important');
+  button.style.setProperty('bottom', '22px', 'important');
+  button.style.setProperty('z-index', '2147483647', 'important');
+  button.style.setProperty('display', 'block', 'important');
+  button.style.setProperty('visibility', 'visible', 'important');
+  button.style.setProperty('opacity', '1', 'important');
+  button.style.setProperty('pointer-events', 'auto', 'important');
+  button.style.setProperty('width', 'auto', 'important');
+  button.style.setProperty('min-width', '180px', 'important');
+  button.style.setProperty('height', 'auto', 'important');
+  button.style.setProperty('margin', '0', 'important');
+  button.style.setProperty('padding', '14px 22px', 'important');
+  button.style.setProperty('border', '0', 'important');
+  button.style.setProperty('border-radius', '999px', 'important');
+  button.style.setProperty('background', '#16a34a', 'important');
+  button.style.setProperty('color', '#fff', 'important');
+  button.style.setProperty('font-size', '15px', 'important');
+  button.style.setProperty('font-weight', '900', 'important');
+  button.style.setProperty('box-shadow', '0 10px 25px rgba(0,0,0,.28)', 'important');
+  button.style.setProperty('cursor', 'pointer', 'important');
+};
+
 const PDF_EXPORT_CSS = `
   @page { size: ${A4_WIDTH_CSS} ${A4_HEIGHT_CSS}; margin: 0; }
   * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; box-sizing: border-box !important; }
@@ -267,6 +293,7 @@ const downloadCahierPdf = async (button) => {
     document.body.classList.remove('cahier-pdf-exporting');
     button.disabled = false;
     button.textContent = originalText;
+    forcePdfButtonVisibleStyle(button);
   }
 };
 
@@ -282,7 +309,7 @@ const ensureCahierPdfButton = () => {
     button.addEventListener('click', () => downloadCahierPdf(button));
     document.body.append(button);
   }
-  button.hidden = false;
+  forcePdfButtonVisibleStyle(button);
 };
 
 const scheduleCahierPdfButton = () => window.requestAnimationFrame(ensureCahierPdfButton);
@@ -292,6 +319,8 @@ if (document.readyState === 'loading') {
 } else {
   scheduleCahierPdfButton();
 }
+
+window.setInterval(scheduleCahierPdfButton, 1000);
 
 new MutationObserver(scheduleCahierPdfButton).observe(document.body, {
   attributes: true,
