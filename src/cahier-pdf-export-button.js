@@ -282,7 +282,7 @@ const ensureCahierPdfButton = () => {
     button.addEventListener('click', () => downloadCahierPdf(button));
     document.body.append(button);
   }
-  button.hidden = !document.body.classList.contains('cahier-tab-active');
+  button.hidden = false;
 };
 
 const scheduleCahierPdfButton = () => window.requestAnimationFrame(ensureCahierPdfButton);
