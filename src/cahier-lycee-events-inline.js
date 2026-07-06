@@ -96,6 +96,43 @@ const insertEventInGroupPages = (groupFirstPage, event) => {
   pages[pages.length - 1].append(newEntry);
 };
 
+const getGroupBlockTitle = (cover) => String(cover.querySelector('h1, [style*="groupCoverTitleStyle"]')?.textContent || cover.textContent || '').toUpperCase();
+
+const getGroupRank = (cover) => {
+  const title = getGroupBlockTitle(cover);
+  if (title.includes('TRONC') || title.includes('AUTRES')) return 1;
+  if (title.includes('1È') || title.includes('1ERE') || title.includes('1ÈRE') || title.includes('1ERES') || title.includes('1ÈRES')) return 2;
+  if (title.includes('2È') || title.includes('2EME') || title.includes('2ÈME')) return 3;
+  return 9;
+};
+
+const collectGroupBlocks = () => {
+  const covers = Array.from(document.querySelectorAll('.homework-cover-page'));
+  return covers.map((cover, index) => {
+    const nodes = [cover];
+    let node = cover.nextElementSibling;
+    while (node && !node.classList.contains('homework-cover-page')) {
+      if (node.classList.contains('homework-page')) nodes.push(node);
+      node = node.nextElementSibling;
+    }
+    return { cover, nodes, rank: getGroupRank(cover), index };
+  });
+};
+
+const renameAutresGroupTitles = () => {
+  document.querySelectorAll('.homework-cover-page h1, .homework-page [style*="text-transform: uppercase"]').forEach((node) => {
+    if (String(node.textContent || '').trim().toUpperCase() === 'AUTRES') node.textContent = 'Tronc Commun';
+  });
+};
+
+const orderGroupPages = () => {
+  const zone = document.querySelector('.cahier-preview-zone');
+  if (!zone) return;
+  const blocks = collectGroupBlocks().sort((a, b) => a.rank - b.rank || a.index - b.index);
+  blocks.forEach((block) => block.nodes.forEach((node) => zone.append(node)));
+  renameAutresGroupTitles();
+};
+
 const insertLyceeEventsInline = () => {
   document.getElementById('cahier-lycee-events-page')?.remove();
   document.querySelectorAll('.cahier-cover-level-buttons').forEach((buttons) => buttons.remove());
@@ -106,6 +143,8 @@ const insertLyceeEventsInline = () => {
   groupPages.forEach((firstPage) => {
     LYCEE_INLINE_EVENTS.forEach((event) => insertEventInGroupPages(firstPage, event));
   });
+
+  orderGroupPages();
 };
 
 const scheduleLyceeEventsInline = () => window.requestAnimationFrame(insertLyceeEventsInline);
