@@ -55,7 +55,7 @@ const getJulyEntries = (group) => {
     { date: 'JEUDI 01/07 - SAMEDI 03/07', subject: 'Lycée', text: 'Rattrapage : 2ème Bac', type: 'exam' }
   ];
 
-  for (let day = 4; day <= 31; day += 1) {
+  for (let day = 4; day <= 10; day += 1) {
     const date = new Date(2027, 6, day);
     if (date.getDay() === 0) continue;
     const monthDate = `${String(day).padStart(2, '0')}/07`;
