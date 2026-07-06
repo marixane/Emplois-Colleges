@@ -12,6 +12,10 @@ body.cahier-tab-active .cahier-group-cover-page {
     linear-gradient(135deg, var(--group-cover-color), #ffffff 44%, var(--group-cover-color)) !important;
 }
 
+body.cahier-tab-active .cahier-group-cover-page:has(+ .homework-page[data-cahier-july-complete="true"]) {
+  display: none !important;
+}
+
 body.cahier-tab-active .cahier-group-cover-page::before {
   content: '';
   position: absolute;
