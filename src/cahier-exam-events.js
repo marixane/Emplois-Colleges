@@ -16,7 +16,7 @@ const EVENT_FIXES_2026 = [
   ['Fête nationale : Fête du Travail', 'Fête nationale : Fête du Travail', 'SAMEDI 01/05'],
   ['Vacance scolaire : Vacances intermédiaires 4', 'Vacance scolaire : Vacances intermédiaires 4', 'DIMANCHE 09/05 - DIMANCHE 16/05'],
   ['Vacance religieuse : Aïd Al-Adha', 'Vacance religieuse : Aïd Al-Adha', '09 - 11 DHOU AL-HIJJA 1448'],
-  ['Vacance religieuse : 1er Moharram', 'Vacance religieuse : 1er Moharram', 'VENDREDI 05/06 - 01 MOHARRAM 1449'],
+  ['Vacance religieuse : 1er Moharram', 'Vacance religieuse : 1er Moharram', '01 MOHARRAM 1449'],
   ['Examen : Examen normalisé local', 'Examen : Examen normalisé local', 'LUNDI 18/01 - MARDI 19/01'],
   ['Examen : Examen régional 1ère Bac', 'Examen : Examen régional 1ère Bac', 'VENDREDI 28/05 - SAMEDI 29/05'],
   ['Examen : Examen national 2ème Bac', 'Examen : Examen national 2ème Bac', 'MARDI 01/06 - JEUDI 03/06'],
