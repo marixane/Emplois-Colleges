@@ -1,0 +1,7 @@
+.cahier-page > div[style*="repeat(5, 1fr)"] {
+  grid-template-columns: repeat(4, 1fr) !important;
+}
+
+.cahier-page > div[style*="repeat(5, 1fr)"] > div:nth-child(5) {
+  display: none !important;
+}
