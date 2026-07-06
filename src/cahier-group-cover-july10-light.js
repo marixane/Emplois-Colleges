@@ -10,7 +10,11 @@ const afterJuly10 = (text) => {
   return date?.month === 7 && date.day > 10;
 };
 
-const pageTitle = (page) => String(page.querySelector('.homework-page > div:first-child > div:first-child')?.textContent || '').trim();
+const pageTitle = (page) => String(
+  page.firstElementChild?.firstElementChild?.textContent ||
+  page.querySelector(':scope > div:first-child > div:first-child')?.textContent ||
+  ''
+).trim();
 
 const isEventEntry = (entry) => {
   const text = String(entry.textContent || '').toLowerCase();
@@ -79,11 +83,14 @@ const applyLightCovers = () => {
     if (afterJuly10(entry.querySelector('.homework-date')?.textContent)) entry.remove();
   });
 
+  document.querySelectorAll('.homework-page').forEach((page) => {
+    if (!page.querySelector('.homework-entry')) page.remove();
+  });
+
   getGroups().forEach((group) => {
     const firstPage = group.pages[0];
     const lastPage = group.pages[group.pages.length - 1];
     if (!firstPage || !lastPage) return;
-
     firstPage.before(coverPage(group));
     lastPage.after(exitPage(group));
   });
@@ -96,5 +103,6 @@ else scheduleLightCovers();
 
 window.setTimeout(applyLightCovers, 1000);
 window.setTimeout(applyLightCovers, 2500);
+window.setTimeout(applyLightCovers, 5000);
 document.addEventListener('change', scheduleLightCovers, { passive: true });
 document.addEventListener('drop', scheduleLightCovers, { passive: true });
