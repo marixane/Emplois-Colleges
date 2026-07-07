@@ -47,6 +47,9 @@
 }
 
 .cahier-session-duration {
+  box-sizing: border-box !important;
+  border-left: 1px solid rgba(107, 114, 128, 0.6) !important;
+  padding-left: 3px !important;
   color: rgba(55, 65, 81, 0.95) !important;
   font-size: 10px !important;
   font-weight: 900 !important;
