@@ -7,11 +7,20 @@
     min-height: 297mm !important;
     max-height: 297mm !important;
     padding-top: 110px !important;
-    padding-bottom: 110px !important;
+    padding-bottom: 0 !important;
     padding-left: 24mm !important;
     padding-right: 8mm !important;
     box-sizing: border-box !important;
     overflow: hidden !important;
+  }
+
+  .homework-page::after {
+    content: '' !important;
+    display: block !important;
+    flex: 0 0 110px !important;
+    height: 110px !important;
+    min-height: 110px !important;
+    background: #fff !important;
   }
 
   .homework-page > .homework-entry {
