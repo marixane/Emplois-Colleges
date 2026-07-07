@@ -1,0 +1,16 @@
+.cahier-preview-zone > .cahier-page:nth-child(5) .page5-group-heading-hidden,
+.cahier-preview-zone > .a4-page:nth-child(5) .page5-group-heading-hidden {
+  display: none !important;
+}
+
+.cahier-preview-zone > .cahier-page:nth-child(5) .page5-activities-title,
+.cahier-preview-zone > .a4-page:nth-child(5) .page5-activities-title {
+  text-transform: none !important;
+}
+
+@media print {
+  .cahier-preview-zone > .cahier-page:nth-child(5) .page5-group-heading-hidden,
+  .cahier-preview-zone > .a4-page:nth-child(5) .page5-group-heading-hidden {
+    display: none !important;
+  }
+}
