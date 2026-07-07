@@ -114,6 +114,7 @@ import './cahier-exams-groups-page.js';
 // Il ne modifie les pages qu'au moment de générer le PDF.
 import './cahier-pdf-button-safari-safe.js';
 import './cahier-pdf-class-size-fix.js';
+import './cahier-pdf-fill-pages.css';
 
 // Désactivé : ce helper DOM faisait buguer l'ajout de plusieurs séances.
 // import './cahier-group-cover-july10-light.js';
