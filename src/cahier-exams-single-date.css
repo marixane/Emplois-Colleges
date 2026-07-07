@@ -70,7 +70,8 @@
 }
 
 .cahier-page > .cahier-exams-list th:first-child,
-.cahier-page > .cahier-exams-list th:nth-child(2) {
+.cahier-page > .cahier-exams-list th:nth-child(2),
+.cahier-page > .cahier-exams-list th:nth-child(3) {
   font-size: 0 !important;
 }
 
@@ -81,6 +82,11 @@
 
 .cahier-page > .cahier-exams-list th:nth-child(2)::after {
   content: 'CYCLE' !important;
+  font-size: 11px !important;
+}
+
+.cahier-page > .cahier-exams-list th:nth-child(3)::after {
+  content: 'EXAMEN' !important;
   font-size: 11px !important;
 }
 
@@ -106,7 +112,8 @@
   color: #1e3a8a !important;
 }
 
-.cahier-page > .cahier-exams-list td:nth-child(3) {
+.cahier-page > .cahier-exams-list td:nth-child(3),
+.cahier-page > .cahier-exams-list tbody tr:nth-child(even) td:nth-child(3) {
   justify-content: flex-start !important;
   width: auto !important;
   min-width: 0 !important;
