@@ -1,38 +1,42 @@
 import { useEffect, useState } from 'react';
-import App6 from './App6.jsx';
 import Tab from './Tab.jsx';
 
+const PAGES = [
+  { id: 'primaire', label: 'Emplois Primaires' },
+  { id: 'college', label: 'Emplois Collèges' },
+  { id: 'lycee', label: 'Emplois Lycées' }
+];
+
 export default function App() {
-  const [activeTab, setActiveTab] = useState('cahier');
+  const [activePage, setActivePage] = useState('primaire');
 
   useEffect(() => {
-    document.body.classList.toggle('cahier-tab-active', activeTab === 'cahier');
-    document.body.classList.toggle('devoir-tab-active', activeTab === 'exam');
+    document.body.classList.add('cahier-tab-active');
+    document.body.classList.remove('devoir-tab-active');
 
     return () => {
       document.body.classList.remove('cahier-tab-active');
-      document.body.classList.remove('devoir-tab-active');
     };
-  }, [activeTab]);
+  }, []);
 
   return <>
-    <nav className="app-tabs">
-      <button
+    <nav className="emplois-page-tabs no-print" aria-label="Choisir un emploi du temps">
+      {PAGES.map((page) => <button
+        key={page.id}
         type="button"
-        className={activeTab === 'exam' ? 'active' : ''}
-        onClick={() => setActiveTab('exam')}
+        className={activePage === page.id ? 'active' : ''}
+        onClick={() => setActivePage(page.id)}
       >
-        Devoir A4
-      </button>
-      <button
-        type="button"
-        className={activeTab === 'cahier' ? 'active' : ''}
-        onClick={() => setActiveTab('cahier')}
-      >
-        Cahier de texte
-      </button>
+        {page.label}
+      </button>)}
     </nav>
 
-    {activeTab === 'exam' ? <App6 /> : <Tab />}
+    {PAGES.map((page) => <div
+      key={page.id}
+      className={`emploi-page-panel ${activePage === page.id ? 'active' : ''}`}
+      aria-hidden={activePage !== page.id}
+    >
+      <Tab />
+    </div>)}
   </>;
 }
