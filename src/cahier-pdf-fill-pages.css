@@ -8,7 +8,7 @@
     max-height: 297mm !important;
     padding-top: 60px !important;
     padding-bottom: 8mm !important;
-    padding-left: 14mm !important;
+    padding-left: 24mm !important;
     padding-right: 8mm !important;
     box-sizing: border-box !important;
     overflow: hidden !important;
@@ -33,5 +33,49 @@
     height: 100% !important;
     min-height: 0 !important;
     box-sizing: border-box !important;
+  }
+
+  .homework-page .homework-date {
+    padding-left: 10mm !important;
+    font-size: 22px !important;
+  }
+
+  .homework-page .homework-subject {
+    font-size: 16px !important;
+  }
+
+  .homework-page .homework-subject > div > span:first-child {
+    font-size: 16px !important;
+  }
+
+  .homework-page .homework-subject > div > span:nth-child(2) {
+    font-size: 20px !important;
+  }
+
+  .homework-page .cahier-session-duration {
+    font-size: 12px !important;
+  }
+
+  .homework-page .homework-text {
+    padding-left: 8mm !important;
+    padding-right: 2mm !important;
+    font-size: 20px !important;
+    line-height: 2 !important;
+    letter-spacing: 1.5px !important;
+    white-space: pre-wrap !important;
+  }
+
+  .homework-page .cahier-exam-entry .homework-text {
+    width: calc(100% - 18mm) !important;
+    height: auto !important;
+    min-height: 62px !important;
+    max-height: 110px !important;
+    margin: auto 9mm !important;
+    padding: 10px 14px !important;
+    align-self: center !important;
+    font-size: 22px !important;
+    line-height: 1.25 !important;
+    letter-spacing: 0.8px !important;
+    border-radius: 10px !important;
   }
 }
