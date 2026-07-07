@@ -15,9 +15,27 @@ const arrangeTimetableControls = () => {
   const page = table.closest('.cahier-page');
   if (!page) return null;
 
+  page.style.setProperty('position', 'relative', 'important');
+
   if (table.nextElementSibling !== total) {
     table.insertAdjacentElement('afterend', total);
   }
+
+  total.style.setProperty('display', 'flex', 'important');
+  total.style.setProperty('align-items', 'center', 'important');
+  total.style.setProperty('justify-content', 'center', 'important');
+  total.style.setProperty('width', 'fit-content', 'important');
+  total.style.setProperty('min-width', '240px', 'important');
+  total.style.setProperty('margin', '24px auto 0', 'important');
+  total.style.setProperty('padding', '14px 28px', 'important');
+  total.style.setProperty('border', '2px solid rgba(30,64,175,.22)', 'important');
+  total.style.setProperty('border-radius', '16px', 'important');
+  total.style.setProperty('background', 'linear-gradient(135deg,#eff6ff 0%,#ecfdf5 100%)', 'important');
+  total.style.setProperty('box-shadow', '0 10px 24px rgba(15,23,42,.10)', 'important');
+  total.style.setProperty('font-size', '20px', 'important');
+  total.style.setProperty('font-weight', '800', 'important');
+  total.style.setProperty('color', '#0f172a', 'important');
+  total.style.setProperty('transform', 'none', 'important');
 
   return page;
 };
@@ -51,6 +69,13 @@ const installCompactTimetableToggle = () => {
   if (wrapper.parentElement !== page) {
     page.prepend(wrapper);
   }
+
+  wrapper.style.setProperty('position', 'absolute', 'important');
+  wrapper.style.setProperty('top', '22px', 'important');
+  wrapper.style.setProperty('left', '28px', 'important');
+  wrapper.style.setProperty('z-index', '30', 'important');
+  wrapper.style.setProperty('margin', '0', 'important');
+  wrapper.style.setProperty('padding', '9px 14px', 'important');
 
   const checkbox = wrapper.querySelector('input');
   applyCompactTimetableState(Boolean(checkbox?.checked));
