@@ -32,12 +32,8 @@ export default function App() {
       </button>)}
     </nav>
 
-    {PAGES.map((page) => <div
-      key={page.id}
-      className={`emploi-page-panel ${activePage === page.id ? 'active' : ''}`}
-      aria-hidden={activePage !== page.id}
-    >
-      <Tab />
-    </div>)}
+    <main className="emploi-page-panel active">
+      <Tab key={activePage} />
+    </main>
   </>;
 }
