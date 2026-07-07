@@ -1,0 +1,37 @@
+@media print {
+  .homework-page {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 210mm !important;
+    height: 297mm !important;
+    min-height: 297mm !important;
+    max-height: 297mm !important;
+    padding-top: 60px !important;
+    padding-bottom: 8mm !important;
+    padding-left: 14mm !important;
+    padding-right: 8mm !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  .homework-page > .homework-entry {
+    flex: 1 1 0 !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .homework-page > .homework-entry > .homework-content {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    grid-template-columns: 40% 60% !important;
+  }
+
+  .homework-page .homework-subject,
+  .homework-page .homework-text {
+    height: 100% !important;
+    min-height: 0 !important;
+    box-sizing: border-box !important;
+  }
+}
