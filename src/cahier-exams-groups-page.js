@@ -9,7 +9,9 @@ const findGroupsBlock = (page) => Array.from(page?.children || []).find((node) =
   if (node.id === SECOND_PAGE_ID || node.classList?.contains(SECOND_PAGE_TITLE_CLASS)) return false;
   if (node.querySelector?.('.cahier-exams-list, .timetable-table')) return false;
   const text = String(node.textContent || '').toUpperCase();
-  return text.includes('TRONC COMMUN') && text.includes('1ÈRES BAC') && text.includes('2ÈME BAC');
+  const oldTitles = text.includes('TRONC COMMUN') && text.includes('1ÈRES BAC') && text.includes('2ÈME BAC');
+  const collegeTitles = text.includes('1 AC') && text.includes('2 AC') && text.includes('3 AC');
+  return oldTitles || collegeTitles;
 });
 
 const getOrCreateSecondPage = (timetablePage) => {
