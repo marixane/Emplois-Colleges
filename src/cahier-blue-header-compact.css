@@ -1,9 +1,9 @@
 .homework-page > div:first-child > div:first-child {
-  transform: translateX(-100px) !important;
+  transform: translateX(100px) !important;
 }
 
 @media print {
   .homework-page > div:first-child > div:first-child {
-    transform: translateX(-100px) !important;
+    transform: translateX(100px) !important;
   }
 }
