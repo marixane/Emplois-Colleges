@@ -1,4 +1,9 @@
 @media print {
+  .cahier-preview-zone > .a4-page:nth-child(-n+4) > *,
+  .cahier-preview-zone > .cahier-page:nth-child(-n+4) > * {
+    transform: translateX(40px) !important;
+  }
+
   .homework-page {
     display: flex !important;
     flex-direction: column !important;
