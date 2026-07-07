@@ -53,11 +53,38 @@ textarea[placeholder="Classe"]::placeholder {
   text-align: center !important;
 }
 
+/* Supprime proprement le cadre interne de la case JOUR sans toucher au tableau. */
 .timetable-table thead th:first-child {
+  position: relative !important;
   color: transparent !important;
-  background: transparent !important;
-  border: 0 !important;
+  background: #fff !important;
   box-shadow: none !important;
+  overflow: visible !important;
+}
+
+.timetable-table thead th:first-child::before,
+.timetable-table thead th:first-child::after {
+  content: '' !important;
+  position: absolute !important;
+  z-index: 5 !important;
+  background: #fff !important;
+  pointer-events: none !important;
+}
+
+/* Cache uniquement la bordure verticale à droite. */
+.timetable-table thead th:first-child::before {
+  top: 0 !important;
+  right: -5px !important;
+  bottom: -5px !important;
+  width: 10px !important;
+}
+
+/* Cache uniquement la bordure horizontale du bas. */
+.timetable-table thead th:first-child::after {
+  left: 0 !important;
+  right: -5px !important;
+  bottom: -5px !important;
+  height: 10px !important;
 }
 
 @media print {
@@ -99,12 +126,5 @@ textarea[placeholder="Classe"]::placeholder {
     margin: 0 !important;
     padding: 0 !important;
     text-align: center !important;
-  }
-
-  .timetable-table thead th:first-child {
-    color: transparent !important;
-    background: transparent !important;
-    border: 0 !important;
-    box-shadow: none !important;
   }
 }
