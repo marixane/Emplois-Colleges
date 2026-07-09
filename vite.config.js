@@ -42,7 +42,7 @@ function normalizeSchoolCalendarPlugin() {
   { start: '24/01', end: '31/01', label: 'Scolaire', text: 'Vacance scolaire : Vacances de mi-année', type: 'holiday' },
   { start: '01/05', end: '01/05', label: 'Nationale', text: 'Fête nationale : Fête du Travail', type: 'holiday' },
   { start: '09/05', end: '16/05', label: 'Scolaire', text: 'Vacance scolaire : Vacances intermédiaires 4', type: 'holiday' },
-  { start: '10/07', end: '10/07', label: 'Administration', text: 'Signature procès-verbal', type: 'holiday' }
+  { start: '10/07', end: '10/07', label: 'Administration', text: 'Signature procès-verbal', type: 'holiday', purple: true }
 ];`;
 
       if (!mandatoryEventsPattern.test(code)) {
@@ -55,6 +55,10 @@ function normalizeSchoolCalendarPlugin() {
         [
           "const EXAM_EVENTS = MANDATORY_EVENTS.filter((event) => event.type === 'exam');",
           'const EXAM_EVENTS = [];'
+        ],
+        [
+          "const holidayTextStyle = { color: '#9a3412', fontSize: '21px', fontWeight: 900, lineHeight: 1.25, letterSpacing: '0.2px', textAlign: 'center', justifyContent: 'center', background: 'linear-gradient(90deg, rgba(254,215,170,0.38), rgba(254,243,199,0.62))', borderRadius: '12px', margin: '8px 18px', padding: '10px 16px', overflow: 'hidden' };",
+          "const holidayTextStyle = { color: '#9a3412', fontSize: '21px', fontWeight: 900, lineHeight: 1.25, letterSpacing: '0.2px', textAlign: 'center', justifyContent: 'center', background: 'linear-gradient(90deg, rgba(254,215,170,0.38), rgba(254,243,199,0.62))', borderRadius: '12px', margin: '8px 18px', padding: '10px 16px', overflow: 'hidden' };\nconst signatureTextStyle = { ...holidayTextStyle, color: '#5b21b6', background: 'linear-gradient(90deg, rgba(221,214,254,0.72), rgba(237,233,254,0.95))', border: '1px solid rgba(124,58,237,0.35)' };"
         ],
         [
           "const getSchoolStartYear = () => {\n  const today = new Date();\n  return today.getMonth() >= 8 ? today.getFullYear() : today.getFullYear() - 1;\n};",
@@ -75,6 +79,14 @@ function normalizeSchoolCalendarPlugin() {
         [
           "const isInsideMandatoryEventAfterStart = (monthDate) => MANDATORY_EVENTS.some((event) => {\n  const date = getMonthDateAsSchoolDate(monthDate);",
           "const isInsideMandatoryEventAfterStart = (monthDate) => MANDATORY_EVENTS.some((event) => {\n  if (event.type !== 'holiday') return false;\n  const date = getMonthDateAsSchoolDate(monthDate);"
+        ],
+        [
+          "return { date: displayDate, sessions: [{ hour: event.label, className: '' }], text: event.text, isHoliday: event.type === 'holiday', isExam: event.type === 'exam', progressDate: event.start, color: event.type === 'exam' ? '#38bdf8' : '#f97316', eventKey: `${event.start}-${eventIndex}` };",
+          "return { date: displayDate, sessions: [{ hour: event.label, className: '' }], text: event.text, isHoliday: event.type === 'holiday', isExam: event.type === 'exam', isPurple: Boolean(event.purple), progressDate: event.start, color: event.purple ? '#8b5cf6' : event.type === 'exam' ? '#38bdf8' : '#f97316', eventKey: `${event.start}-${eventIndex}` };"
+        ],
+        [
+          "style={entry.isHoliday ? holidayTextStyle : entry.isExam ? examTextStyle : dotTextStyle}",
+          "style={entry.isPurple ? signatureTextStyle : entry.isHoliday ? holidayTextStyle : entry.isExam ? examTextStyle : dotTextStyle}"
         ]
       ];
 
