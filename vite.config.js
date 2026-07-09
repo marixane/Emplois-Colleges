@@ -41,8 +41,7 @@ function normalizeSchoolCalendarPlugin() {
   { start: '14/01', end: '14/01', label: 'Nationale', text: 'Fête nationale : Nouvel An Amazigh', type: 'holiday' },
   { start: '24/01', end: '31/01', label: 'Scolaire', text: 'Vacance scolaire : Vacances de mi-année', type: 'holiday' },
   { start: '01/05', end: '01/05', label: 'Nationale', text: 'Fête nationale : Fête du Travail', type: 'holiday' },
-  { start: '09/05', end: '16/05', label: 'Scolaire', text: 'Vacance scolaire : Vacances intermédiaires 4', type: 'holiday' },
-  { start: '10/07', end: '10/07', label: 'Administration', text: 'Signature procès-verbal', type: 'holiday', purple: true }
+  { start: '09/05', end: '16/05', label: 'Scolaire', text: 'Vacance scolaire : Vacances intermédiaires 4', type: 'holiday' }
 ];`;
 
       if (!mandatoryEventsPattern.test(code)) {
@@ -70,14 +69,6 @@ function normalizeSchoolCalendarPlugin() {
         [
           "const isInsideMandatoryEventAfterStart = (monthDate) => MANDATORY_EVENTS.some((event) => {\n  const date = getMonthDateAsSchoolDate(monthDate);",
           "const isInsideMandatoryEventAfterStart = (monthDate) => MANDATORY_EVENTS.some((event) => {\n  if (event.type !== 'holiday') return false;\n  const date = getMonthDateAsSchoolDate(monthDate);"
-        ],
-        [
-          "return { date: displayDate, sessions: [{ hour: event.label, className: '' }], text: event.text, isHoliday: event.type === 'holiday', isExam: event.type === 'exam', progressDate: event.start, color: event.type === 'exam' ? '#38bdf8' : '#f97316', eventKey: `${event.start}-${eventIndex}` };",
-          "return { date: displayDate, sessions: [{ hour: event.label, className: '' }], text: event.text, isHoliday: event.type === 'holiday', isExam: event.type === 'exam', isPurple: Boolean(event.purple), progressDate: event.start, color: event.purple ? '#8b5cf6' : event.type === 'exam' ? '#38bdf8' : '#f97316', eventKey: `${event.start}-${eventIndex}` };"
-        ],
-        [
-          "style={entry.isHoliday ? holidayTextStyle : entry.isExam ? examTextStyle : dotTextStyle}",
-          "style={entry.isPurple ? signatureTextStyle : entry.isHoliday ? holidayTextStyle : entry.isExam ? examTextStyle : dotTextStyle}"
         ]
       ];
 
@@ -86,32 +77,32 @@ function normalizeSchoolCalendarPlugin() {
         nextCode = nextCode.replace(search, replacement);
       }
 
-      const forceSignatureSearch = "    }).filter(Boolean);\n\n    return { title: GROUP_TITLES[groupIndex], color: GROUP_COLORS[groupIndex], classes: group.classes, pages: chunkEntries(entries, 5) };";
-      const forceSignatureReplacement = `    }).filter(Boolean);
-
-    const forcedSignatureEntry = {
-      date: 'SAMEDI 10/07',
-      sessions: [{ hour: 'Administration', className: '' }],
-      text: 'Signature procès-verbal',
-      isHoliday: true,
-      isExam: false,
-      isPurple: true,
-      progressDate: '10/07',
-      color: '#8b5cf6',
-      eventKey: '10/07-forced-signature'
-    };
-    const entriesWithoutSignature = entries.filter((entry) => entry.eventKey !== '10/07-0' && entry.progressDate !== '10/07');
-    entriesWithoutSignature.push(forcedSignatureEntry);
-
-    return { title: GROUP_TITLES[groupIndex], color: GROUP_COLORS[groupIndex], classes: group.classes, pages: chunkEntries(entriesWithoutSignature, 5) };`;
-
-      if (!nextCode.includes(forceSignatureSearch)) {
-        throw new Error('Impossible de forcer l’événement du 10/07 dans Tab.jsx');
-      }
-      nextCode = nextCode.replace(forceSignatureSearch, forceSignatureReplacement);
-
       if (!examListPattern.test(nextCode)) throw new Error('Impossible de retirer la liste des examens de Tab.jsx');
       nextCode = nextCode.replace(examListPattern, '');
+
+      const closingPattern = /\n\s*<\/section>\n\s*<\/main>;\n}/;
+      if (!closingPattern.test(nextCode)) {
+        throw new Error('Impossible d’ajouter la page forcée du 10/07 dans Tab.jsx');
+      }
+
+      const forcedSignaturePage = `
+      <div className="a4-page cahier-page homework-page forced-signature-page" style={{ position: 'relative', paddingTop: '60px', '--group-color': '#ddd6fe' }}>
+        <div style={{ ...groupHomeworkHeaderStyle, background: '#ddd6fe' }}>
+          <div style={groupHomeworkTitleStyle}>Clôture administrative</div>
+          <div style={{ color: '#5b21b6', fontSize: '16px', fontWeight: 900, textAlign: 'right' }}>10/07/2027</div>
+        </div>
+        <section className="homework-entry cahier-extra-holiday-entry" style={{ '--homework-color': '#8b5cf6' }}>
+          <div className="homework-date">SAMEDI 10/07/2027</div>
+          <div className="homework-content">
+            <div className="homework-subject" style={subjectTextStyle}>
+              <div style={sessionLineStyle}><span style={sessionHourStyle}>Administration</span><span style={sessionClassStyle}></span></div>
+            </div>
+            <div className="homework-text" style={signatureTextStyle}>Signature procès-verbal</div>
+          </div>
+        </section>
+      </div>`;
+
+      nextCode = nextCode.replace(closingPattern, `${forcedSignaturePage}\n    </section>\n  </main>;\n}`);
 
       return { code: nextCode, map: null };
     }
