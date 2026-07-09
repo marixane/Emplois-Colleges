@@ -9,9 +9,12 @@
 }
 
 .cahier-exams-groups-main-title {
+  position: relative !important;
+  order: 0 !important;
+  z-index: 2 !important;
   flex: 0 0 auto !important;
   width: fit-content !important;
-  margin: 0 auto 18px !important;
+  margin: 0 auto 22px !important;
   padding: 9px 28px !important;
   border: 3px solid rgba(17, 24, 39, 0.18) !important;
   border-radius: 999px !important;
@@ -20,14 +23,21 @@
   font-weight: 900 !important;
   letter-spacing: 2px !important;
   text-transform: uppercase !important;
+  transform: none !important;
 }
 
 .cahier-exams-groups-page .cahier-exams-list {
-  position: static !important;
-  flex: 0 0 auto !important;
+  position: relative !important;
+  inset: auto !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
   order: 1 !important;
+  z-index: 1 !important;
+  flex: 0 0 auto !important;
   width: 100% !important;
-  margin: 0 0 22px !important;
+  margin: 0 0 24px !important;
   border-radius: 20px !important;
   transform: none !important;
 }
@@ -49,14 +59,19 @@
 }
 
 .cahier-exams-groups-page > div[style*="grid-template-columns"] {
-  position: static !important;
-  flex: 0 0 auto !important;
+  position: relative !important;
+  inset: auto !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
   order: 2 !important;
+  flex: 0 0 auto !important;
   display: grid !important;
   grid-template-columns: repeat(3, 1fr) !important;
   gap: 16px !important;
   width: 100% !important;
-  margin: 80px 0 0 !important;
+  margin: 24px 0 0 !important;
   transform: none !important;
 }
 
