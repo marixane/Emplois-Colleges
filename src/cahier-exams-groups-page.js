@@ -27,11 +27,15 @@ const getOrCreateSecondPage = (timetablePage) => {
   if (!title) {
     title = document.createElement('div');
     title.className = SECOND_PAGE_TITLE_CLASS;
-    title.textContent = 'Liste des examens et groupes';
     page.prepend(title);
   }
+  title.textContent = 'Liste des groupes';
 
   return page;
+};
+
+const removeExamTables = () => {
+  document.querySelectorAll('.cahier-exams-list').forEach((examList) => examList.remove());
 };
 
 const makeSecondPage = () => {
@@ -39,14 +43,12 @@ const makeSecondPage = () => {
   if (!timetablePage) return;
 
   const secondPage = getOrCreateSecondPage(timetablePage);
-  const examList = timetablePage.querySelector('.cahier-exams-list') || secondPage.querySelector('.cahier-exams-list');
   const groups = findGroupsBlock(timetablePage) || findGroupsBlock(secondPage);
-  if (!examList || !groups) return;
+  if (!groups) return;
 
-  examList.style.removeProperty('display');
+  removeExamTables();
   groups.style.removeProperty('display');
 
-  if (examList.parentElement !== secondPage) secondPage.append(examList);
   if (groups.parentElement !== secondPage) secondPage.append(groups);
 };
 
