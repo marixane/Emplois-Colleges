@@ -41,7 +41,8 @@ function normalizeSchoolCalendarPlugin() {
   { start: '14/01', end: '14/01', label: 'Nationale', text: 'Fête nationale : Nouvel An Amazigh', type: 'holiday' },
   { start: '24/01', end: '31/01', label: 'Scolaire', text: 'Vacance scolaire : Vacances de mi-année', type: 'holiday' },
   { start: '01/05', end: '01/05', label: 'Nationale', text: 'Fête nationale : Fête du Travail', type: 'holiday' },
-  { start: '09/05', end: '16/05', label: 'Scolaire', text: 'Vacance scolaire : Vacances intermédiaires 4', type: 'holiday' }
+  { start: '09/05', end: '16/05', label: 'Scolaire', text: 'Vacance scolaire : Vacances intermédiaires 4', type: 'holiday' },
+  { start: '10/07', end: '10/07', label: 'Administration', text: 'Signature procès-verbal', type: 'holiday' }
 ];`;
 
       if (!mandatoryEventsPattern.test(code)) {
