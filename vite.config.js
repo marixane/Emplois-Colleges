@@ -21,6 +21,47 @@ async function findBrowser() {
   throw new Error('Google Chrome, Chromium ou Microsoft Edge est requis pour générer le PDF.');
 }
 
+function removeExamEventsPlugin() {
+  return {
+    name: 'remove-exam-events-from-cahier',
+    enforce: 'pre',
+    transform(code, id) {
+      if (!id.endsWith('/src/Tab.jsx')) return null;
+
+      const examListPattern = /\n\s*<section className="cahier-exams-list"[\s\S]*?<\/section>/;
+      const replacements = [
+        [
+          "const EXAM_EVENTS = MANDATORY_EVENTS.filter((event) => event.type === 'exam');",
+          'const EXAM_EVENTS = [];'
+        ],
+        [
+          "const getMandatoryEventStart = (monthDate) => MANDATORY_EVENTS.filter((event) => event.start === monthDate);",
+          "const getMandatoryEventStart = (monthDate) => MANDATORY_EVENTS.filter((event) => event.type === 'holiday' && event.start === monthDate);"
+        ],
+        [
+          "const isInsideMandatoryEventAfterStart = (monthDate) => MANDATORY_EVENTS.some((event) => {\n  const date = getMonthDateAsSchoolDate(monthDate);",
+          "const isInsideMandatoryEventAfterStart = (monthDate) => MANDATORY_EVENTS.some((event) => {\n  if (event.type !== 'holiday') return false;\n  const date = getMonthDateAsSchoolDate(monthDate);"
+        ]
+      ];
+
+      let nextCode = code;
+      for (const [search, replacement] of replacements) {
+        if (!nextCode.includes(search)) {
+          throw new Error(`Impossible de nettoyer les examens : motif introuvable dans Tab.jsx`);
+        }
+        nextCode = nextCode.replace(search, replacement);
+      }
+
+      if (!examListPattern.test(nextCode)) {
+        throw new Error('Impossible de retirer la liste des examens de Tab.jsx');
+      }
+      nextCode = nextCode.replace(examListPattern, '');
+
+      return { code: nextCode, map: null };
+    }
+  };
+}
+
 function pdfApiPlugin() {
   return {
     name: 'local-cahier-pdf-api',
@@ -144,7 +185,7 @@ function pdfApiPlugin() {
 }
 
 export default defineConfig({
-  plugins: [react(), pdfApiPlugin()],
+  plugins: [removeExamEventsPlugin(), react(), pdfApiPlugin()],
   build: {
     target: 'es2017',
     cssTarget: 'safari13'
