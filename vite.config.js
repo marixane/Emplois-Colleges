@@ -26,7 +26,7 @@ function normalizeSchoolCalendarPlugin() {
     name: 'normalize-school-calendar-2026-2027',
     enforce: 'pre',
     transform(code, id) {
-      if (!id.endsWith('/src/Tab.jsx')) return null;
+      if (!id.includes('/src/Tab.jsx')) return null;
 
       const mandatoryEventsPattern = /const MANDATORY_EVENTS = \[[\s\S]*?\n\];/;
       const examListPattern = /\n\s*<section className="cahier-exams-list"[\s\S]*?<\/section>/;
