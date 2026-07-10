@@ -168,8 +168,11 @@ export default async function handler(req, res) {
       timeout: LONG_TIMEOUT
     });
 
+    const preview = String(req.query?.preview || '') === '1';
+    const disposition = preview ? 'inline' : 'attachment';
+
     res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', 'attachment; filename="Cahier-de-texte-2026-2027.pdf"');
+    res.setHeader('Content-Disposition', `${disposition}; filename="Cahier-de-texte-2026-2027.pdf"`);
     res.setHeader('Cache-Control', 'no-store');
     return res.status(200).send(pdf);
   } catch (error) {
