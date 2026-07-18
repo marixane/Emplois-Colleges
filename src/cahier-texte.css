@@ -82,7 +82,7 @@ body.cahier-tab-active .exercise-line-count-overlay {
 }
 
 .cover-page-shell .cover-page-only {
-  margin-bottom: 24px !important;
+  margin-bottom: 0 !important;
 }
 
 .cover-page-shell + .clean-cahier-shell {
