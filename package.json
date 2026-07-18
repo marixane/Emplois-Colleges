@@ -11,12 +11,12 @@
   "dependencies": {
     "@sparticuz/chromium": "latest",
     "@vitejs/plugin-react": "latest",
-    "vite": "latest",
-    "react": "latest",
-    "react-dom": "latest",
     "html2canvas": "latest",
     "jspdf": "latest",
-    "puppeteer-core": "21.11.0"
-  },
-  "devDependencies": {}
+    "pdf-lib": "^1.17.1",
+    "puppeteer-core": "21.11.0",
+    "react": "latest",
+    "react-dom": "latest",
+    "vite": "latest"
+  }
 }
