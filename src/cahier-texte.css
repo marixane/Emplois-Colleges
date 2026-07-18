@@ -81,11 +81,11 @@ body.cahier-tab-active .exercise-line-count-overlay {
   padding-bottom: 0 !important;
 }
 
-.cover-page-shell .cover-page-only {
+body .cover-page-shell .cover-page-only:last-child {
   margin-bottom: 0 !important;
 }
 
-.cover-page-shell + .clean-cahier-shell {
+.cover-page-shell ~ .clean-cahier-shell {
   padding-top: 0 !important;
 }
 
