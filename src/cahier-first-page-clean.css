@@ -39,13 +39,14 @@
 }
 
 .cahier-page > .cahier-header > h2::after {
-  content: 'EMPLOI DU TEMPS' !important;
+  content: 'Emploi du temps hebdomadaire' !important;
   color: #1f2937 !important;
-  font-size: 34px !important;
+  font-size: 25px !important;
   font-weight: 950 !important;
-  letter-spacing: 2.2px !important;
-  text-transform: uppercase !important;
+  letter-spacing: 0.8px !important;
+  text-transform: none !important;
   vertical-align: middle !important;
+  white-space: nowrap !important;
 }
 
 .cahier-page > .total-hours-control {
